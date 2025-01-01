@@ -6,10 +6,16 @@
     <title>Doze Studio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./font.css" />
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
       rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/lenis@1.1.18/dist/lenis.css"
     />
   </head>
   <body>
@@ -26,7 +32,7 @@
         ></video>
       </div>
 
-      <div class="parent-container relative top-0 left-0 h-[1000vh]">
+      <div class="parent-container relative top-0 left-0 h-[1500vh]">
         <div
           class="canvas-wrapper overflow-x-hidden w-full h-screen sticky top-0 left-0 z-[9]"
         >
@@ -119,11 +125,15 @@
           </div>
 
           <div
-            class="absolute opacity-0  w-[90%] md:w-1/2 flex animate-2 items-center leading-none gap-[2vw] text-white right-[2%] bottom-8 z-[12]"
+            class="absolute opacity-0 w-[90%] md:w-1/2 flex animate-2 items-center leading-none gap-[2vw] text-white right-[2%] bottom-8 z-[12]"
           >
-            <h2 class="text-[6vw] md:text-[4vw] text-right font-Sans-Med w-1/2">Transforming visions</h2>
+            <h2 class="text-[6vw] md:text-[4vw] text-right font-Sans-Med w-1/2">
+              Transforming visions
+            </h2>
 
-            <p class="text-[2.8vw] md:text-[1.2vw] font-Sans-Lig text-justify w-1/2 ">
+            <p
+              class="text-[2.8vw] md:text-[1.2vw] font-Sans-Lig text-justify w-1/2"
+            >
               For the advertising campaign of Mustela's “Melting Massage Balm”,
               Doze Studio, in partnership with Fanfare Paris, created a visually
               soothing and emotionally engaging experience.
@@ -267,7 +277,7 @@
       const imageList = [];
       const framesConfig = {
         currentIndex: 0,
-        maxIndex: 1345,
+        maxIndex: 700,
       };
 
       function preLoadImage() {
@@ -378,8 +388,6 @@
           .to(".panelism", { opacity: 0, ease: "linear" }, "n");
       }
 
-      
-
       function addListenerOnProjectName() {
         function createTemplate(data, targetedElement) {
           const { displayProjectTitle, thumbnailDescription, thumbnailVisual } =
@@ -407,42 +415,43 @@
           wrapper.innerHTML = projectShowcaseTemplate;
         }
 
-
         Array.from(projectListName).map((project) => {
-        project.addEventListener("mouseenter", function () {
+          project.addEventListener("mouseenter", function () {
+            gsap.to(".project-list-name > div > h2", {
+              opacity: 0.4,
+            });
 
-          gsap.to(".project-list-name > div > h2" , {
-            opacity:0.4
-          })
+            gsap.to(project, {
+              opacity: 1,
+            });
 
-          gsap.to(project , {
-            opacity:1
-          })
+            const projectTitle = project?.innerText;
+            const currentProjectToDisplay = projectListInfo.find((project) => {
+              return (
+                projectTitle === project["attributes"]["displayProjectTitle"]
+              );
+            });
 
-
-          const projectTitle = project?.innerText;
-          const currentProjectToDisplay = projectListInfo.find((project) => {
-            return (
-              projectTitle === project["attributes"]["displayProjectTitle"]
-            );
+            createTemplate(currentProjectToDisplay, wrapper);
           });
 
-          createTemplate(currentProjectToDisplay, wrapper);
+          project.addEventListener("mouseleave", function () {
+            wrapper.innerHTML = "";
+            gsap.to(".project-list-name > div > h2", {
+              opacity: 1,
+            });
+          });
         });
-
-        project.addEventListener("mouseleave", function () {
-          wrapper.innerHTML = "";
-          gsap.to(".project-list-name > div > h2" , {
-            opacity:1
-          })
-        });
-
-        
-      });
       }
 
-      preLoadImage();
+      function initLenis() {
+        const lenis = new Lenis({
+          autoRaf: true,
+        });
+      }
 
+      initLenis();
+      preLoadImage();
       addListenerOnProjectName();
 
       const projectListInfo = [
