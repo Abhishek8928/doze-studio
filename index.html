@@ -1,0 +1,3154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doze Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./font.css" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="w-full">
+      <div
+        class="loader fixed z-[10] bg-black flex justify-center items-center top-0 left-0 w-full h-screen"
+      >
+        <video
+          class="w-full h-1/2"
+          src="./assest/load.mp4"
+          autoplay
+          loop
+          muted
+        ></video>
+      </div>
+
+      <div class="parent-container relative top-0 left-0 h-[1000vh]">
+        <div
+          class="canvas-wrapper overflow-x-hidden w-full h-screen sticky top-0 left-0 z-[9]"
+        >
+          <canvas id="canvas" class="w-full h-full bg-black"></canvas>
+
+          <div
+            id="navbar"
+            class="absolute flex justify-between items-center mix-blend-difference px-[4%] top-0 left-0 w-full py-6 z-[12]"
+          >
+            <div class="flex items-center w-1/3 gap-2 logo">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 203 24"
+                fill="#fff"
+                class="text-white w-36"
+              >
+                <path
+                  d="M60.0225 23.496C55.6825 23.496 52.7065 20.148 52.7065 15.219C52.7065 10.383 55.5895 7.004 59.7435 7.004C63.8975 7.004 66.6875 10.352 66.6875 15.312V15.87H55.1245C55.1245 19.063 57.1085 21.233 59.9915 21.233C62.1305 21.233 63.7425 20.055 64.1765 18.226L66.5945 18.536C65.9745 21.543 63.3705 23.496 60.0225 23.496ZM64.2695 13.762C64.2695 11.096 62.3785 9.267 59.6815 9.267C56.9845 9.267 55.1245 11.096 55.1245 13.762H64.2695Z"
+                ></path>
+                <path
+                  d="M37.789 23V20.892L47.399 9.608H37.789V7.5H50.096V9.608L40.517 20.892H50.096V23H37.789Z"
+                ></path>
+                <path
+                  d="M27.7208 23.496C23.3808 23.496 20.4048 20.148 20.4048 15.312C20.4048 10.445 23.4118 7.004 27.7208 7.004C31.9988 7.004 35.0058 10.414 35.0058 15.312C35.0058 20.179 32.0298 23.496 27.7208 23.496ZM27.7208 21.233C30.6658 21.233 32.6188 18.877 32.6188 15.312C32.6188 11.685 30.6348 9.267 27.7208 9.267C24.8068 9.267 22.8228 11.685 22.8228 15.312C22.8228 18.877 24.7758 21.233 27.7208 21.233Z"
+                ></path>
+                <path
+                  d="M0.63501 23V1.3H7.14501C13.221 1.3 17.313 5.671 17.313 12.15C17.313 18.629 13.221 23 7.14501 23H0.63501ZM7.14501 20.737C11.764 20.737 14.895 17.265 14.895 12.15C14.895 7.035 11.764 3.563 7.14501 3.563H3.05301V20.737H7.14501Z"
+                ></path>
+                <path
+                  d="M194.944 23.496C190.604 23.496 187.628 20.148 187.628 15.312C187.628 10.445 190.635 7.004 194.944 7.004C199.222 7.004 202.229 10.414 202.229 15.312C202.229 20.179 199.253 23.496 194.944 23.496ZM194.944 21.233C197.889 21.233 199.842 18.877 199.842 15.312C199.842 11.685 197.858 9.267 194.944 9.267C192.03 9.267 190.046 11.685 190.046 15.312C190.046 18.877 191.999 21.233 194.944 21.233Z"
+                ></path>
+                <path
+                  d="M181.747 23V7.5H184.072V23H181.747ZM181.468 5.02V2.106H184.382V5.02H181.468Z"
+                ></path>
+                <path
+                  d="M169.319 23.496C165.382 23.496 162.623 20.117 162.623 15.25C162.623 10.414 165.382 7.004 169.35 7.004C171.954 7.004 173.907 8.461 174.62 10.786V1.3H176.945V23H174.62V19.683C173.907 22.008 171.923 23.496 169.319 23.496ZM169.815 21.233C172.667 21.233 174.589 18.815 174.589 15.25C174.589 11.685 172.667 9.267 169.815 9.267C166.963 9.267 165.041 11.685 165.041 15.25C165.041 18.815 166.963 21.233 169.815 21.233Z"
+                ></path>
+                <path
+                  d="M151.433 23.496C148.364 23.496 146.411 21.264 146.411 17.699V7.5H148.736V17.699C148.736 19.931 149.914 21.233 151.929 21.233C154.719 21.233 156.579 18.784 156.579 15.033V7.5H158.904V23H156.579V20.241C155.711 22.194 153.789 23.496 151.433 23.496Z"
+                ></path>
+                <path
+                  d="M140.833 23C137.919 23 136.493 21.574 136.493 18.66V9.76299H133.145V7.49999H136.493V2.53999H138.818V7.49999H143.468V9.76299H138.818V18.877C138.818 20.117 139.438 20.737 140.678 20.737H143.468V23H140.833Z"
+                ></path>
+                <path
+                  d="M124.207 23.496C119.402 23.496 116.085 19.869 116.085 15.064L118.503 14.754C118.503 18.319 120.704 21.233 124.238 21.233C126.749 21.233 129.198 19.776 129.198 17.203C129.198 11.53 117.294 13.762 117.294 6.756C117.294 3.222 120.363 0.804001 124.052 0.804001C127.617 0.804001 130.624 3.036 130.934 6.632L128.516 6.942C128.206 4.586 126.253 3.067 123.897 3.067C121.696 3.067 119.712 4.369 119.712 6.539C119.712 11.809 131.616 9.422 131.616 16.893C131.616 20.675 128.454 23.496 124.207 23.496Z"
+                ></path>
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M104 16H77V14H104V16Z"
+                ></path>
+              </svg>
+
+              <div style="mix-blend-mode: difference" class="">
+                <video
+                  class="w-6"
+                  loop
+                  autoplay
+                  muted
+                  src="./assest/logoAnim.mp4"
+                ></video>
+              </div>
+            </div>
+            <ul class="flex justify-center w-1/3 gap-4 font-Sans-Reg">
+              <li class="text-white">Projects</li>
+              <li class="text-white">About</li>
+              <li class="text-white">Labs</li>
+            </ul>
+            <div
+              class="flex justify-end w-1/3 gap-2 text-sm text-right text-white font-Sans-Reg"
+            >
+              <div>
+                <span>FR:</span>
+                <span>14:55</span>
+              </div>
+
+              <span>Let's Talk</span>
+            </div>
+          </div>
+
+          <div
+            class="absolute text-white opacity-1 animate-1 leading-none hero-home-title left-[4%] bottom-8 z-[12]"
+          >
+            <h1 class="font-Sans-Med text-[1.2vw] font-light">
+              © 2024 Doze.Std
+            </h1>
+            <h1 class="text-[2vw] font-Sans-Med font-medium">
+              Shaping brands → Crafting motion →
+            </h1>
+          </div>
+
+          <div
+            class="absolute opacity-0  w-[90%] md:w-1/2 flex animate-2 items-center leading-none gap-[2vw] text-white right-[2%] bottom-8 z-[12]"
+          >
+            <h2 class="text-[6vw] md:text-[4vw] text-right font-Sans-Med w-1/2">Transforming visions</h2>
+
+            <p class="text-[2.8vw] md:text-[1.2vw] font-Sans-Lig text-justify w-1/2 ">
+              For the advertising campaign of Mustela's “Melting Massage Balm”,
+              Doze Studio, in partnership with Fanfare Paris, created a visually
+              soothing and emotionally engaging experience.
+            </p>
+          </div>
+
+          <div
+            class="absolute text-white opacity-0 text-white animate-3 top-1/2 -translate-x-1/2 -translate-y-1/2 left-1/2 z-[12]"
+          >
+            <h2
+              class="text-[3vw] font-Sans-Lig font-light text-uppercase text-center"
+            >
+              Elevating Aesthetic
+            </h2>
+
+            <p class="text-[2.8vw] md:text-[1.2vw] text-center">
+              The project highlighted the unique nature of these headphones,
+              featuring their transparent design that showcases internal
+              components like microphones and circuits.
+            </p>
+          </div>
+
+          <div
+            class="absolute h-screen -right-[100%] animate-4 top-0 w-1/3 bg-white z-[24] p-[2vw]"
+          >
+            <div class="relative w-full h-full">
+              <small class="text-[1.4vw] text-zinc-400 font-Sans-Lig">
+                &copy; 2024 Doze.Std</small
+              >
+
+              <p class="text-[1vw] font-Sans-Med pt-[6vw]">
+                Whether you're an AI startup aiming for Series D or an
+                established brand seeking a digital transformation, our
+                award-winning team will take your user-experience to the next
+                level.
+              </p>
+
+              <button
+                class="border-[1px] flex gap-[1.2vw] items-center px-4 py-2 inline-block mt-[1vw] font-Sans-Reg text-[2vh] border-zinc-400"
+              >
+                Get Review <i class="ri-arrow-right-line"></i>
+              </button>
+
+              <div class="absolute bottom-[2%]">
+                <h1 class="text-black font-Sans-Med text-[1.2vw] leading-none">
+                  Innvoating Design
+                </h1>
+
+                <p class="text-[1vw] font-Sans-Med py-[1vw]">
+                  This project involved the creation of a special alphabet using
+                  signs and flags designed specifically for the band. The video
+                  features a monumental set design that blurs the lines between
+                  an aerial installation and an epileptic visual spectacle,
+                  enhancing the immersive experience of the music.
+                </p>
+
+                <button
+                  class="flex text-white bg-black gap-[1.2vw] items-center px-4 py-2 font-Sans-Reg text-[2vh]"
+                >
+                  Experiences
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="absolute text-white panelism opacity-0 text-white animate-5 top-1/2 text-6xl -translate-x-1/2 -translate-y-1/2 left-1/2 z-[12]"
+          >
+            &copy;panelism<span class="inline-block w-10 h-2 bg-white"> </span
+            >2048
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full p-[3vw] bg-white">
+        <div class="flex items-start w-full project-list-name">
+          <div
+            class="sticky top-[10%] flex justify-center w-2/4 right-0 h-[200px]"
+          >
+            <div class="w-[80%]">
+              <div class="project-showecase-wrapper"></div>
+            </div>
+          </div>
+          <div class="w-2/4">
+            <h2 class="font-Sans-Reg text-[4vw] cursor-pointer">Mustela</h2>
+            <h2 class="font-Sans-Reg text-[4vw] cursor-pointer">
+              A24 - WYFSTW
+            </h2>
+            <h2 class="font-Sans-Reg text-[4vw] cursor-pointer">CM | Equity</h2>
+            <h2 class="font-Sans-Reg text-[4vw] cursor-pointer">
+              Citroën ë-C3
+            </h2>
+            <h2 class="font-Sans-Reg text-[4vw] cursor-pointer">Dampa</h2>
+            <h2 class="font-Sans-Reg text-[4vw] cursor-pointer">Torticolia</h2>
+            <h2 class="font-Sans-Reg text-[4vw] cursor-pointer">Farcry 6</h2>
+            <h2 class="font-Sans-Reg text-[4vw] cursor-pointer">
+              Perspective Fund
+            </h2>
+            <h2 class="font-Sans-Reg text-[4vw] cursor-pointer">
+              Martin Solveig
+            </h2>
+            <h2 class="font-Sans-Reg text-[4vw] cursor-pointer">
+              Nope Collectif
+            </h2>
+            <h2 class="font-Sans-Reg text-[4vw] cursor-pointer">Heiwa</h2>
+            <h2 class="font-Sans-Reg text-[4vw] cursor-pointer">
+              Alltta Curio
+            </h2>
+            <h2 class="font-Sans-Reg text-[4vw] cursor-pointer">Mobil M</h2>
+            <h2 class="font-Sans-Reg text-[4vw] cursor-pointer">Nothing Ear</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+      integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+      integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script>
+      const loader = document.querySelector(".loader");
+      const canvas = document.querySelector("canvas");
+      const context = canvas.getContext("2d");
+      const projectListName = document.querySelectorAll(
+        ".project-list-name > div > h2"
+      );
+
+      const wrapper = document.querySelector(".project-showecase-wrapper");
+
+      let imageCounter = 0;
+      const imageList = [];
+      const framesConfig = {
+        currentIndex: 0,
+        maxIndex: 1345,
+      };
+
+      function preLoadImage() {
+        for (
+          let currentIndex = 1;
+          currentIndex <= framesConfig.maxIndex;
+          currentIndex++
+        ) {
+          const paddedNumber = currentIndex.toString().padStart(4, "0");
+          const imageSrc = `/frames/frame_${paddedNumber}.jpeg`;
+
+          const imageElement = new Image();
+          imageElement.src = imageSrc;
+
+          imageElement.onload = function () {
+            imageCounter++;
+
+            imageList.push(imageElement);
+
+            if (imageCounter === framesConfig.maxIndex) {
+              drawImageOnCanvas(framesConfig?.currentIndex);
+              startAnimation();
+              gsap.to(loader, {
+                opacity: 0,
+                ease: "expo",
+                height: 0,
+              });
+            }
+          };
+        }
+      }
+
+      function drawImageOnCanvas(index) {
+        if (index >= 0 && index < framesConfig?.maxIndex) {
+          const currentImg = imageList[index];
+
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+
+          const scaleX = canvas.width / currentImg.width;
+          const scaleY = canvas.height / currentImg.height;
+
+          const scale = Math.max(scaleX, scaleY);
+
+          const newWidth = currentImg.width * scale;
+          const newHeight = currentImg.height * scale;
+
+          const offsetX = (canvas.width - newWidth) / 2;
+          const offsetY = (canvas.height - newHeight) / 2;
+
+          context.clearRect(0, 0, canvas.width, canvas.height);
+
+          context.imageSmoothingEnabled = true;
+          context.imageSmoothingQuality = "high";
+
+          context.drawImage(currentImg, offsetX, offsetY, newWidth, newHeight);
+        } else {
+          console.log("index is out of range");
+        }
+      }
+
+      function renderFrame(index) {
+        return {
+          currentIndex: index,
+        };
+      }
+
+      function startAnimation() {
+        const t1 = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".parent-container",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 2,
+            onUpdate: function () {
+              drawImageOnCanvas(Math.floor(framesConfig?.currentIndex));
+            },
+          },
+        });
+
+        t1.to(framesConfig, renderFrame(50), "a")
+          .to(".animate-1", { opacity: 0, ease: "linear" }, "a")
+          .to(framesConfig, renderFrame(100), "b")
+          .to(".animate-2", { opacity: 1, ease: "linear" }, "b")
+          .to(framesConfig, renderFrame(150), "d")
+          .to(".animate-2", { opacity: 0, ease: "linear" }, "d")
+          .to(framesConfig, renderFrame(200), "e")
+          .to(".animate-3", { opacity: 1, ease: "linear" }, "e")
+          .to(framesConfig, renderFrame(250), "f")
+          .to(".animate-3", { opacity: 1, ease: "expo" }, "f")
+          .to(framesConfig, renderFrame(300), "g")
+          .to(".animate-3", { opacity: 0, ease: "expo" }, "g")
+          .to(framesConfig, renderFrame(350), "h")
+          .to(".animate-4", { right: 0, ease: "expo" }, "h")
+          .to(framesConfig, renderFrame(400), "i")
+          .to(".animate-4", { right: 0, ease: "expo" }, "i")
+          .to(framesConfig, renderFrame(450), "j")
+          .to(".animate-4", { right: "-100%", ease: "linear" }, "j")
+          .to(framesConfig, renderFrame(500), "k")
+          .to("canvas", { scale: 0.5, ease: "linear" }, "k")
+          .to(framesConfig, renderFrame(550), "l")
+          .to(".panelism", { opacity: 1, ease: "linear" }, "l")
+          .to(framesConfig, renderFrame(600), "m")
+          .to(".panelism > span", { width: 100, ease: "linear" }, "m")
+          .to(framesConfig, renderFrame(650), "n")
+          .to("canvas", { scale: 1, ease: "linear" }, "n")
+          .to(framesConfig, renderFrame(700), "n")
+          .to(".panelism", { opacity: 0, ease: "linear" }, "n");
+      }
+
+      
+
+      function addListenerOnProjectName() {
+        function createTemplate(data, targetedElement) {
+          const { displayProjectTitle, thumbnailDescription, thumbnailVisual } =
+            data?.attributes;
+
+          const projectShowcaseTemplate = `<video
+  muted
+  loop
+  autoplay
+  class="w-full rounded-lg"
+  src=${"https://api.doze.studio" + thumbnailVisual?.data?.attributes?.url}
+></video>
+
+<div class="project-content">
+  <h2 class="font-Sans-Reg text-[2vw] py-[1vw]">
+    ${displayProjectTitle}
+  </h2>
+
+  <p class="project-description font-Sans-Lig text-[1.2vw]">
+    ${thumbnailDescription}
+  </p>
+</div>
+`;
+
+          wrapper.innerHTML = projectShowcaseTemplate;
+        }
+
+
+        Array.from(projectListName).map((project) => {
+        project.addEventListener("mouseenter", function () {
+
+          gsap.to(".project-list-name > div > h2" , {
+            opacity:0.4
+          })
+
+          gsap.to(project , {
+            opacity:1
+          })
+
+
+          const projectTitle = project?.innerText;
+          const currentProjectToDisplay = projectListInfo.find((project) => {
+            return (
+              projectTitle === project["attributes"]["displayProjectTitle"]
+            );
+          });
+
+          createTemplate(currentProjectToDisplay, wrapper);
+        });
+
+        project.addEventListener("mouseleave", function () {
+          wrapper.innerHTML = "";
+          gsap.to(".project-list-name > div > h2" , {
+            opacity:1
+          })
+        });
+
+        
+      });
+      }
+
+      preLoadImage();
+
+      addListenerOnProjectName();
+
+      const projectListInfo = [
+        {
+          id: 3,
+          attributes: {
+            title: "Mustela - Melting Massage Balm",
+            client: "Fanfare Paris",
+            intro: null,
+            content:
+              "<p>For the advertising campaign of Mustela's “Melting Massage Balm”, Doze Studio, in partnership with Fanfare Paris, created a visually soothing and emotionally engaging experience. The balm is designed for nourishing baby massages, promoting bonding and well-being from birth.<br><br>The advertisement highlights the product's lasting hydration and its 100% natural and organic composition, enhancing the sensory experience for both mother and child. The visuals skillfully combine fluid motion design and soothing natural patterns, reflecting the product's qualities and calming effects.<br><br>This campaign showcases tender moments between a mother and her baby, offering a unique sensory journey through a captivating visual narrative where mother and child become one.</p>",
+            thumbnailDescription:
+              "A calming and visually engaging ad for Mustela's “Melting Massage Balm,” highlighting its natural, hydrating properties and the sensory bond it nurtures between mother and baby.",
+            slug: "mustela_massage",
+            underOpacity: 0.7,
+            createdAt: "2024-05-07T13:41:24.053Z",
+            updatedAt: "2024-05-16T10:24:12.930Z",
+            publishedAt: "2024-05-07T14:48:37.309Z",
+            underVisualVimeo: null,
+            displayProjectTitle: "Mustela",
+            underVisual: {
+              data: {
+                id: 21,
+                attributes: {
+                  name: "MUSTELA_POST_1.1.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "MUSTELA_POST_1_1_2bea0d4afe",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 9557.63,
+                  url: "/uploads/MUSTELA_POST_1_1_2bea0d4afe.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-07T15:34:33.285Z",
+                  updatedAt: "2024-05-16T10:24:08.864Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 3,
+                      title: "Mustela - Melting Massage Balm",
+                      client: "Fanfare Paris",
+                      intro: null,
+                      content:
+                        "<p>For the advertising campaign of Mustela's “Melting Massage Balm”, Doze Studio, in partnership with Fanfare Paris, created a visually soothing and emotionally engaging experience. The balm is designed for nourishing baby massages, promoting bonding and well-being from birth.<br><br>The advertisement highlights the product's lasting hydration and its 100% natural and organic composition, enhancing the sensory experience for both mother and child. The visuals skillfully combine fluid motion design and soothing natural patterns, reflecting the product's qualities and calming effects.<br><br>This campaign showcases tender moments between a mother and her baby, offering a unique sensory journey through a captivating visual narrative where mother and child become one.</p>",
+                      thumbnailDescription:
+                        "A calming and visually engaging ad for Mustela's “Melting Massage Balm,” highlighting its natural, hydrating properties and the sensory bond it nurtures between mother and baby.",
+                      slug: "mustela_massage",
+                      underOpacity: 0.7,
+                      createdAt: "2024-05-07T13:41:24.053Z",
+                      updatedAt: "2024-05-16T10:24:12.930Z",
+                      publishedAt: "2024-05-07T14:48:37.309Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Mustela",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 3,
+                      title: "Mustela - Melting Massage Balm",
+                      client: "Fanfare Paris",
+                      intro: null,
+                      content:
+                        "<p>For the advertising campaign of Mustela's “Melting Massage Balm”, Doze Studio, in partnership with Fanfare Paris, created a visually soothing and emotionally engaging experience. The balm is designed for nourishing baby massages, promoting bonding and well-being from birth.<br><br>The advertisement highlights the product's lasting hydration and its 100% natural and organic composition, enhancing the sensory experience for both mother and child. The visuals skillfully combine fluid motion design and soothing natural patterns, reflecting the product's qualities and calming effects.<br><br>This campaign showcases tender moments between a mother and her baby, offering a unique sensory journey through a captivating visual narrative where mother and child become one.</p>",
+                      thumbnailDescription:
+                        "A calming and visually engaging ad for Mustela's “Melting Massage Balm,” highlighting its natural, hydrating properties and the sensory bond it nurtures between mother and baby.",
+                      slug: "mustela_massage",
+                      underOpacity: 0.7,
+                      createdAt: "2024-05-07T13:41:24.053Z",
+                      updatedAt: "2024-05-16T10:24:12.930Z",
+                      publishedAt: "2024-05-07T14:48:37.309Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Mustela",
+                    },
+                  ],
+                },
+              },
+            },
+            thumbnailVisual: {
+              data: {
+                id: 21,
+                attributes: {
+                  name: "MUSTELA_POST_1.1.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "MUSTELA_POST_1_1_2bea0d4afe",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 9557.63,
+                  url: "/uploads/MUSTELA_POST_1_1_2bea0d4afe.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-07T15:34:33.285Z",
+                  updatedAt: "2024-05-16T10:24:08.864Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 3,
+                      title: "Mustela - Melting Massage Balm",
+                      client: "Fanfare Paris",
+                      intro: null,
+                      content:
+                        "<p>For the advertising campaign of Mustela's “Melting Massage Balm”, Doze Studio, in partnership with Fanfare Paris, created a visually soothing and emotionally engaging experience. The balm is designed for nourishing baby massages, promoting bonding and well-being from birth.<br><br>The advertisement highlights the product's lasting hydration and its 100% natural and organic composition, enhancing the sensory experience for both mother and child. The visuals skillfully combine fluid motion design and soothing natural patterns, reflecting the product's qualities and calming effects.<br><br>This campaign showcases tender moments between a mother and her baby, offering a unique sensory journey through a captivating visual narrative where mother and child become one.</p>",
+                      thumbnailDescription:
+                        "A calming and visually engaging ad for Mustela's “Melting Massage Balm,” highlighting its natural, hydrating properties and the sensory bond it nurtures between mother and baby.",
+                      slug: "mustela_massage",
+                      underOpacity: 0.7,
+                      createdAt: "2024-05-07T13:41:24.053Z",
+                      updatedAt: "2024-05-16T10:24:12.930Z",
+                      publishedAt: "2024-05-07T14:48:37.309Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Mustela",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 3,
+                      title: "Mustela - Melting Massage Balm",
+                      client: "Fanfare Paris",
+                      intro: null,
+                      content:
+                        "<p>For the advertising campaign of Mustela's “Melting Massage Balm”, Doze Studio, in partnership with Fanfare Paris, created a visually soothing and emotionally engaging experience. The balm is designed for nourishing baby massages, promoting bonding and well-being from birth.<br><br>The advertisement highlights the product's lasting hydration and its 100% natural and organic composition, enhancing the sensory experience for both mother and child. The visuals skillfully combine fluid motion design and soothing natural patterns, reflecting the product's qualities and calming effects.<br><br>This campaign showcases tender moments between a mother and her baby, offering a unique sensory journey through a captivating visual narrative where mother and child become one.</p>",
+                      thumbnailDescription:
+                        "A calming and visually engaging ad for Mustela's “Melting Massage Balm,” highlighting its natural, hydrating properties and the sensory bond it nurtures between mother and baby.",
+                      slug: "mustela_massage",
+                      underOpacity: 0.7,
+                      createdAt: "2024-05-07T13:41:24.053Z",
+                      updatedAt: "2024-05-16T10:24:12.930Z",
+                      publishedAt: "2024-05-07T14:48:37.309Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Mustela",
+                    },
+                  ],
+                },
+              },
+            },
+            category: {
+              data: {
+                id: 17,
+                attributes: {
+                  name: "Advertising",
+                  createdAt: "2024-05-14T14:57:04.669Z",
+                  updatedAt: "2024-05-14T14:57:04.669Z",
+                },
+              },
+            },
+            infosList: [
+              {
+                id: 8,
+                creditItem: [
+                  {
+                    id: 24,
+                    name: "Fanfare Paris",
+                    link: "https://www.fanfare.paris/",
+                    title: "Client",
+                  },
+                ],
+              },
+              {
+                id: 5,
+                creditItem: [
+                  {
+                    id: 9,
+                    name: "Doze Studio",
+                    link: "https://doze.studio/",
+                    title: "Creative Direction",
+                  },
+                  {
+                    id: 10,
+                    name: "Clément Perron",
+                    link: null,
+                    title: "Producer",
+                  },
+                  {
+                    id: 11,
+                    name: "Flore Montmory",
+                    link: null,
+                    title: "Storyboard",
+                  },
+                  {
+                    id: 12,
+                    name: "Benjamin Tessier",
+                    link: null,
+                    title: "Motion Design",
+                  },
+                  {
+                    id: 13,
+                    name: "Martin Girardeau",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 14,
+                    name: "Flore Montmory",
+                    link: null,
+                    title: "Traditional Animation",
+                  },
+                  {
+                    id: 15,
+                    name: "Clack",
+                    link: "https://www.leclack.fr/",
+                    title: "Film and Photography",
+                  },
+                  {
+                    id: 16,
+                    name: "Discal Studio",
+                    link: "https://discalstudio.com/",
+                    title: "Music and Sound Design",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        {
+          id: 11,
+          attributes: {
+            title: "A24 - WHEN YOU FINISH SAVING THE WORLD",
+            client: "Antinomy Studio",
+            intro: null,
+            content:
+              "<p style=\"margin-left:0px;\">Doze Studio collaborated with A24 and Antinomy Studio to develop a dynamic and visually appealing social media campaign for Jesse Eisenberg's directorial debut, featuring Julianne Moore and Finn Wolfhard. The campaign was strategically designed to promote both the theatrical release and the original soundtrack of the film, generating significant buzz and engagement across various social media platforms.<br><br>Our approach involved selecting clips from the film that were not only engaging but also representative of the film's unique visual and thematic style. Special care was taken to balance the plot and content of the clips to maintain the film's appeal without revealing key plot elements. Work on typography was subtly done to further anchor the film in its unique universe.</p>",
+            thumbnailDescription:
+              "Dynamic and visually appealing social media campaign for When You Finish Saving The World",
+            slug: "a24-wyfstw",
+            underOpacity: null,
+            createdAt: "2024-05-14T09:48:39.429Z",
+            updatedAt: "2024-05-16T09:56:41.772Z",
+            publishedAt: "2024-05-14T09:59:31.640Z",
+            underVisualVimeo: null,
+            displayProjectTitle: "A24 - WYFSTW",
+            underVisual: {
+              data: {
+                id: 115,
+                attributes: {
+                  name: "30.-Final-Scene.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "30_Final_Scene_a2de4c778e",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 195.52,
+                  url: "/uploads/30_Final_Scene_a2de4c778e.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-14T09:56:29.620Z",
+                  updatedAt: "2024-05-16T09:56:28.131Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 11,
+                      title: "A24 - WHEN YOU FINISH SAVING THE WORLD",
+                      client: "Antinomy Studio",
+                      intro: null,
+                      content:
+                        "<p style=\"margin-left:0px;\">Doze Studio collaborated with A24 and Antinomy Studio to develop a dynamic and visually appealing social media campaign for Jesse Eisenberg's directorial debut, featuring Julianne Moore and Finn Wolfhard. The campaign was strategically designed to promote both the theatrical release and the original soundtrack of the film, generating significant buzz and engagement across various social media platforms.<br><br>Our approach involved selecting clips from the film that were not only engaging but also representative of the film's unique visual and thematic style. Special care was taken to balance the plot and content of the clips to maintain the film's appeal without revealing key plot elements. Work on typography was subtly done to further anchor the film in its unique universe.</p>",
+                      thumbnailDescription:
+                        "Dynamic and visually appealing social media campaign for When You Finish Saving The World",
+                      slug: "a24-wyfstw",
+                      underOpacity: null,
+                      createdAt: "2024-05-14T09:48:39.429Z",
+                      updatedAt: "2024-05-16T09:56:41.772Z",
+                      publishedAt: "2024-05-14T09:59:31.640Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "A24 - WYFSTW",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 11,
+                      title: "A24 - WHEN YOU FINISH SAVING THE WORLD",
+                      client: "Antinomy Studio",
+                      intro: null,
+                      content:
+                        "<p style=\"margin-left:0px;\">Doze Studio collaborated with A24 and Antinomy Studio to develop a dynamic and visually appealing social media campaign for Jesse Eisenberg's directorial debut, featuring Julianne Moore and Finn Wolfhard. The campaign was strategically designed to promote both the theatrical release and the original soundtrack of the film, generating significant buzz and engagement across various social media platforms.<br><br>Our approach involved selecting clips from the film that were not only engaging but also representative of the film's unique visual and thematic style. Special care was taken to balance the plot and content of the clips to maintain the film's appeal without revealing key plot elements. Work on typography was subtly done to further anchor the film in its unique universe.</p>",
+                      thumbnailDescription:
+                        "Dynamic and visually appealing social media campaign for When You Finish Saving The World",
+                      slug: "a24-wyfstw",
+                      underOpacity: null,
+                      createdAt: "2024-05-14T09:48:39.429Z",
+                      updatedAt: "2024-05-16T09:56:41.772Z",
+                      publishedAt: "2024-05-14T09:59:31.640Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "A24 - WYFSTW",
+                    },
+                  ],
+                },
+              },
+            },
+            thumbnailVisual: {
+              data: {
+                id: 115,
+                attributes: {
+                  name: "30.-Final-Scene.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "30_Final_Scene_a2de4c778e",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 195.52,
+                  url: "/uploads/30_Final_Scene_a2de4c778e.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-14T09:56:29.620Z",
+                  updatedAt: "2024-05-16T09:56:28.131Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 11,
+                      title: "A24 - WHEN YOU FINISH SAVING THE WORLD",
+                      client: "Antinomy Studio",
+                      intro: null,
+                      content:
+                        "<p style=\"margin-left:0px;\">Doze Studio collaborated with A24 and Antinomy Studio to develop a dynamic and visually appealing social media campaign for Jesse Eisenberg's directorial debut, featuring Julianne Moore and Finn Wolfhard. The campaign was strategically designed to promote both the theatrical release and the original soundtrack of the film, generating significant buzz and engagement across various social media platforms.<br><br>Our approach involved selecting clips from the film that were not only engaging but also representative of the film's unique visual and thematic style. Special care was taken to balance the plot and content of the clips to maintain the film's appeal without revealing key plot elements. Work on typography was subtly done to further anchor the film in its unique universe.</p>",
+                      thumbnailDescription:
+                        "Dynamic and visually appealing social media campaign for When You Finish Saving The World",
+                      slug: "a24-wyfstw",
+                      underOpacity: null,
+                      createdAt: "2024-05-14T09:48:39.429Z",
+                      updatedAt: "2024-05-16T09:56:41.772Z",
+                      publishedAt: "2024-05-14T09:59:31.640Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "A24 - WYFSTW",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 11,
+                      title: "A24 - WHEN YOU FINISH SAVING THE WORLD",
+                      client: "Antinomy Studio",
+                      intro: null,
+                      content:
+                        "<p style=\"margin-left:0px;\">Doze Studio collaborated with A24 and Antinomy Studio to develop a dynamic and visually appealing social media campaign for Jesse Eisenberg's directorial debut, featuring Julianne Moore and Finn Wolfhard. The campaign was strategically designed to promote both the theatrical release and the original soundtrack of the film, generating significant buzz and engagement across various social media platforms.<br><br>Our approach involved selecting clips from the film that were not only engaging but also representative of the film's unique visual and thematic style. Special care was taken to balance the plot and content of the clips to maintain the film's appeal without revealing key plot elements. Work on typography was subtly done to further anchor the film in its unique universe.</p>",
+                      thumbnailDescription:
+                        "Dynamic and visually appealing social media campaign for When You Finish Saving The World",
+                      slug: "a24-wyfstw",
+                      underOpacity: null,
+                      createdAt: "2024-05-14T09:48:39.429Z",
+                      updatedAt: "2024-05-16T09:56:41.772Z",
+                      publishedAt: "2024-05-14T09:59:31.640Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "A24 - WYFSTW",
+                    },
+                  ],
+                },
+              },
+            },
+            category: {
+              data: {
+                id: 15,
+                attributes: {
+                  name: "Branding & Identity",
+                  createdAt: "2024-05-13T15:00:41.291Z",
+                  updatedAt: "2024-05-14T14:54:45.170Z",
+                },
+              },
+            },
+            infosList: [
+              {
+                id: 7,
+                creditItem: [
+                  {
+                    id: 23,
+                    name: "Antinomy Studio",
+                    link: "https://antinomy.studio/",
+                    title: "Client",
+                  },
+                ],
+              },
+              {
+                id: 6,
+                creditItem: [
+                  {
+                    id: 18,
+                    name: "Antinomy Studio",
+                    link: "https://antinomy.studio/",
+                    title: "Creative Direction",
+                  },
+                  {
+                    id: 19,
+                    name: "Clément Perron",
+                    link: null,
+                    title: "Producer",
+                  },
+                  {
+                    id: 20,
+                    name: "Victor Drapeau",
+                    link: null,
+                    title: "Editing",
+                  },
+                  {
+                    id: 21,
+                    name: "Guillaume Estrade",
+                    link: null,
+                    title: "Motion Design",
+                  },
+                  {
+                    id: 22,
+                    name: null,
+                    link: null,
+                    title: null,
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        {
+          id: 14,
+          attributes: {
+            title: "Crédit Mutuel | Equity",
+            client: "The Links",
+            intro: null,
+            content:
+              "<p>Doze Studio collaborated with The Links agency to develop a dynamic and visually appealing social media campaign for Crédit Mutuel Equity. This network of over 350 executives provides assurance to each member, regardless of their project, by leveraging the collective experience of the group.<br>&nbsp;</p><p>Our approach involved adhering strictly to a strong brand identity while bringing it to life in a compelling manner. To achieve this, we created numerous scripts to ensure the video could be easily adapted and evolve over time without significant additional costs for the client.</p>",
+            thumbnailDescription:
+              "Doze Studio and The Links agency developed a dynamic social media campaign for Crédit Mutuel Equity, aiming to highlight their network of over 350 executives. We focused on a strong brand identity and created adaptable video scripts to minimize future costs.",
+            slug: "cmequity",
+            underOpacity: 0.8,
+            createdAt: "2024-06-06T13:58:08.935Z",
+            updatedAt: "2024-06-06T15:45:29.490Z",
+            publishedAt: "2024-06-06T14:03:03.991Z",
+            underVisualVimeo: "761434529",
+            displayProjectTitle: "CM | Equity",
+            underVisual: {
+              data: {
+                id: 234,
+                attributes: {
+                  name: "credit_mutuel___equity (1080p).mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: null,
+                  hash: "credit_mutuel_equity_1080p_773f8553d2",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 6689.81,
+                  url: "/uploads/credit_mutuel_equity_1080p_773f8553d2.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-06-06T14:00:46.241Z",
+                  updatedAt: "2024-06-06T14:00:46.241Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 14,
+                      title: "Crédit Mutuel | Equity",
+                      client: "The Links",
+                      intro: null,
+                      content:
+                        "<p>Doze Studio collaborated with The Links agency to develop a dynamic and visually appealing social media campaign for Crédit Mutuel Equity. This network of over 350 executives provides assurance to each member, regardless of their project, by leveraging the collective experience of the group.<br>&nbsp;</p><p>Our approach involved adhering strictly to a strong brand identity while bringing it to life in a compelling manner. To achieve this, we created numerous scripts to ensure the video could be easily adapted and evolve over time without significant additional costs for the client.</p>",
+                      thumbnailDescription:
+                        "Doze Studio and The Links agency developed a dynamic social media campaign for Crédit Mutuel Equity, aiming to highlight their network of over 350 executives. We focused on a strong brand identity and created adaptable video scripts to minimize future costs.",
+                      slug: "cmequity",
+                      underOpacity: 0.8,
+                      createdAt: "2024-06-06T13:58:08.935Z",
+                      updatedAt: "2024-06-06T15:45:29.490Z",
+                      publishedAt: "2024-06-06T14:03:03.991Z",
+                      underVisualVimeo: "761434529",
+                      displayProjectTitle: "CM | Equity",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 14,
+                      title: "Crédit Mutuel | Equity",
+                      client: "The Links",
+                      intro: null,
+                      content:
+                        "<p>Doze Studio collaborated with The Links agency to develop a dynamic and visually appealing social media campaign for Crédit Mutuel Equity. This network of over 350 executives provides assurance to each member, regardless of their project, by leveraging the collective experience of the group.<br>&nbsp;</p><p>Our approach involved adhering strictly to a strong brand identity while bringing it to life in a compelling manner. To achieve this, we created numerous scripts to ensure the video could be easily adapted and evolve over time without significant additional costs for the client.</p>",
+                      thumbnailDescription:
+                        "Doze Studio and The Links agency developed a dynamic social media campaign for Crédit Mutuel Equity, aiming to highlight their network of over 350 executives. We focused on a strong brand identity and created adaptable video scripts to minimize future costs.",
+                      slug: "cmequity",
+                      underOpacity: 0.8,
+                      createdAt: "2024-06-06T13:58:08.935Z",
+                      updatedAt: "2024-06-06T15:45:29.490Z",
+                      publishedAt: "2024-06-06T14:03:03.991Z",
+                      underVisualVimeo: "761434529",
+                      displayProjectTitle: "CM | Equity",
+                    },
+                  ],
+                },
+              },
+            },
+            thumbnailVisual: {
+              data: {
+                id: 234,
+                attributes: {
+                  name: "credit_mutuel___equity (1080p).mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: null,
+                  hash: "credit_mutuel_equity_1080p_773f8553d2",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 6689.81,
+                  url: "/uploads/credit_mutuel_equity_1080p_773f8553d2.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-06-06T14:00:46.241Z",
+                  updatedAt: "2024-06-06T14:00:46.241Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 14,
+                      title: "Crédit Mutuel | Equity",
+                      client: "The Links",
+                      intro: null,
+                      content:
+                        "<p>Doze Studio collaborated with The Links agency to develop a dynamic and visually appealing social media campaign for Crédit Mutuel Equity. This network of over 350 executives provides assurance to each member, regardless of their project, by leveraging the collective experience of the group.<br>&nbsp;</p><p>Our approach involved adhering strictly to a strong brand identity while bringing it to life in a compelling manner. To achieve this, we created numerous scripts to ensure the video could be easily adapted and evolve over time without significant additional costs for the client.</p>",
+                      thumbnailDescription:
+                        "Doze Studio and The Links agency developed a dynamic social media campaign for Crédit Mutuel Equity, aiming to highlight their network of over 350 executives. We focused on a strong brand identity and created adaptable video scripts to minimize future costs.",
+                      slug: "cmequity",
+                      underOpacity: 0.8,
+                      createdAt: "2024-06-06T13:58:08.935Z",
+                      updatedAt: "2024-06-06T15:45:29.490Z",
+                      publishedAt: "2024-06-06T14:03:03.991Z",
+                      underVisualVimeo: "761434529",
+                      displayProjectTitle: "CM | Equity",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 14,
+                      title: "Crédit Mutuel | Equity",
+                      client: "The Links",
+                      intro: null,
+                      content:
+                        "<p>Doze Studio collaborated with The Links agency to develop a dynamic and visually appealing social media campaign for Crédit Mutuel Equity. This network of over 350 executives provides assurance to each member, regardless of their project, by leveraging the collective experience of the group.<br>&nbsp;</p><p>Our approach involved adhering strictly to a strong brand identity while bringing it to life in a compelling manner. To achieve this, we created numerous scripts to ensure the video could be easily adapted and evolve over time without significant additional costs for the client.</p>",
+                      thumbnailDescription:
+                        "Doze Studio and The Links agency developed a dynamic social media campaign for Crédit Mutuel Equity, aiming to highlight their network of over 350 executives. We focused on a strong brand identity and created adaptable video scripts to minimize future costs.",
+                      slug: "cmequity",
+                      underOpacity: 0.8,
+                      createdAt: "2024-06-06T13:58:08.935Z",
+                      updatedAt: "2024-06-06T15:45:29.490Z",
+                      publishedAt: "2024-06-06T14:03:03.991Z",
+                      underVisualVimeo: "761434529",
+                      displayProjectTitle: "CM | Equity",
+                    },
+                  ],
+                },
+              },
+            },
+            category: {
+              data: {
+                id: 11,
+                attributes: {
+                  name: "Motion Design",
+                  createdAt: "2024-05-07T13:44:12.860Z",
+                  updatedAt: "2024-05-14T14:55:21.892Z",
+                },
+              },
+            },
+            infosList: [
+              {
+                id: 25,
+                creditItem: [
+                  {
+                    id: 105,
+                    name: "The Links",
+                    link: "https://thelinks.fr/",
+                    title: "Client",
+                  },
+                ],
+              },
+              {
+                id: 24,
+                creditItem: [
+                  {
+                    id: 103,
+                    name: "Doze Studio",
+                    link: null,
+                    title: "Creative Direction",
+                  },
+                  {
+                    id: 101,
+                    name: "Matthieu Braccini",
+                    link: null,
+                    title: "Motion Design",
+                  },
+                  {
+                    id: 102,
+                    name: "Edouard Tyl",
+                    link: null,
+                    title: "Music",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        {
+          id: 2,
+          attributes: {
+            title: "Citroën ë-C3 100% électrique",
+            client: "Nod Paris",
+            intro: null,
+            content:
+              '<p><span style="font-family:&quot;Open Sans&quot;, Arial, sans-serif;">Doze Studio collaborated with Nod Paris and Continental Production for the post-production of an innovative advertising campaign for the new Citroën ë-C3, highlighting its electric nature.</span><br><br><span style="font-family:&quot;Open Sans&quot;, Arial, sans-serif;">The project involved creating dynamic and explosive motion design content, specifically designed to be displayed on screens that project the graphics onto the car\'s body. This creative method not only emphasizes the ë-C3\'s sleek design and curves but also makes the advertisement more immersive and captivating. The animations were meticulously developed to enhance Citroën\'s reinvention of electric mobility, making the vehicle appealing and accessible from all angles.</span></p>',
+            thumbnailDescription:
+              "Innovative and immersive advertising campaign for Citroën's new electric ë-C3, featuring dynamic motion designs projected onto the vehicle to accentuate its design and electric nature.",
+            slug: "c3-electrique",
+            underOpacity: 0.8,
+            createdAt: "2024-05-07T09:07:35.986Z",
+            updatedAt: "2024-05-16T09:57:05.777Z",
+            publishedAt: "2024-05-07T09:11:37.380Z",
+            underVisualVimeo: null,
+            displayProjectTitle: "Citroën ë-C3",
+            underVisual: {
+              data: {
+                id: 114,
+                attributes: {
+                  name: "240110_CITROËN_VIDEO_RS.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "240110_CITROEN_VIDEO_RS_3593a0161c",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 1385.69,
+                  url: "/uploads/240110_CITROEN_VIDEO_RS_3593a0161c.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-14T09:40:38.404Z",
+                  updatedAt: "2024-05-16T09:57:00.815Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 2,
+                      title: "Citroën ë-C3 100% électrique",
+                      client: "Nod Paris",
+                      intro: null,
+                      content:
+                        '<p><span style="font-family:&quot;Open Sans&quot;, Arial, sans-serif;">Doze Studio collaborated with Nod Paris and Continental Production for the post-production of an innovative advertising campaign for the new Citroën ë-C3, highlighting its electric nature.</span><br><br><span style="font-family:&quot;Open Sans&quot;, Arial, sans-serif;">The project involved creating dynamic and explosive motion design content, specifically designed to be displayed on screens that project the graphics onto the car\'s body. This creative method not only emphasizes the ë-C3\'s sleek design and curves but also makes the advertisement more immersive and captivating. The animations were meticulously developed to enhance Citroën\'s reinvention of electric mobility, making the vehicle appealing and accessible from all angles.</span></p>',
+                      thumbnailDescription:
+                        "Innovative and immersive advertising campaign for Citroën's new electric ë-C3, featuring dynamic motion designs projected onto the vehicle to accentuate its design and electric nature.",
+                      slug: "c3-electrique",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-07T09:07:35.986Z",
+                      updatedAt: "2024-05-16T09:57:05.777Z",
+                      publishedAt: "2024-05-07T09:11:37.380Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Citroën ë-C3",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 2,
+                      title: "Citroën ë-C3 100% électrique",
+                      client: "Nod Paris",
+                      intro: null,
+                      content:
+                        '<p><span style="font-family:&quot;Open Sans&quot;, Arial, sans-serif;">Doze Studio collaborated with Nod Paris and Continental Production for the post-production of an innovative advertising campaign for the new Citroën ë-C3, highlighting its electric nature.</span><br><br><span style="font-family:&quot;Open Sans&quot;, Arial, sans-serif;">The project involved creating dynamic and explosive motion design content, specifically designed to be displayed on screens that project the graphics onto the car\'s body. This creative method not only emphasizes the ë-C3\'s sleek design and curves but also makes the advertisement more immersive and captivating. The animations were meticulously developed to enhance Citroën\'s reinvention of electric mobility, making the vehicle appealing and accessible from all angles.</span></p>',
+                      thumbnailDescription:
+                        "Innovative and immersive advertising campaign for Citroën's new electric ë-C3, featuring dynamic motion designs projected onto the vehicle to accentuate its design and electric nature.",
+                      slug: "c3-electrique",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-07T09:07:35.986Z",
+                      updatedAt: "2024-05-16T09:57:05.777Z",
+                      publishedAt: "2024-05-07T09:11:37.380Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Citroën ë-C3",
+                    },
+                  ],
+                },
+              },
+            },
+            thumbnailVisual: {
+              data: {
+                id: 114,
+                attributes: {
+                  name: "240110_CITROËN_VIDEO_RS.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "240110_CITROEN_VIDEO_RS_3593a0161c",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 1385.69,
+                  url: "/uploads/240110_CITROEN_VIDEO_RS_3593a0161c.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-14T09:40:38.404Z",
+                  updatedAt: "2024-05-16T09:57:00.815Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 2,
+                      title: "Citroën ë-C3 100% électrique",
+                      client: "Nod Paris",
+                      intro: null,
+                      content:
+                        '<p><span style="font-family:&quot;Open Sans&quot;, Arial, sans-serif;">Doze Studio collaborated with Nod Paris and Continental Production for the post-production of an innovative advertising campaign for the new Citroën ë-C3, highlighting its electric nature.</span><br><br><span style="font-family:&quot;Open Sans&quot;, Arial, sans-serif;">The project involved creating dynamic and explosive motion design content, specifically designed to be displayed on screens that project the graphics onto the car\'s body. This creative method not only emphasizes the ë-C3\'s sleek design and curves but also makes the advertisement more immersive and captivating. The animations were meticulously developed to enhance Citroën\'s reinvention of electric mobility, making the vehicle appealing and accessible from all angles.</span></p>',
+                      thumbnailDescription:
+                        "Innovative and immersive advertising campaign for Citroën's new electric ë-C3, featuring dynamic motion designs projected onto the vehicle to accentuate its design and electric nature.",
+                      slug: "c3-electrique",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-07T09:07:35.986Z",
+                      updatedAt: "2024-05-16T09:57:05.777Z",
+                      publishedAt: "2024-05-07T09:11:37.380Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Citroën ë-C3",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 2,
+                      title: "Citroën ë-C3 100% électrique",
+                      client: "Nod Paris",
+                      intro: null,
+                      content:
+                        '<p><span style="font-family:&quot;Open Sans&quot;, Arial, sans-serif;">Doze Studio collaborated with Nod Paris and Continental Production for the post-production of an innovative advertising campaign for the new Citroën ë-C3, highlighting its electric nature.</span><br><br><span style="font-family:&quot;Open Sans&quot;, Arial, sans-serif;">The project involved creating dynamic and explosive motion design content, specifically designed to be displayed on screens that project the graphics onto the car\'s body. This creative method not only emphasizes the ë-C3\'s sleek design and curves but also makes the advertisement more immersive and captivating. The animations were meticulously developed to enhance Citroën\'s reinvention of electric mobility, making the vehicle appealing and accessible from all angles.</span></p>',
+                      thumbnailDescription:
+                        "Innovative and immersive advertising campaign for Citroën's new electric ë-C3, featuring dynamic motion designs projected onto the vehicle to accentuate its design and electric nature.",
+                      slug: "c3-electrique",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-07T09:07:35.986Z",
+                      updatedAt: "2024-05-16T09:57:05.777Z",
+                      publishedAt: "2024-05-07T09:11:37.380Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Citroën ë-C3",
+                    },
+                  ],
+                },
+              },
+            },
+            category: {
+              data: {
+                id: 17,
+                attributes: {
+                  name: "Advertising",
+                  createdAt: "2024-05-14T14:57:04.669Z",
+                  updatedAt: "2024-05-14T14:57:04.669Z",
+                },
+              },
+            },
+            infosList: [
+              {
+                id: 3,
+                creditItem: [
+                  {
+                    id: 25,
+                    name: "Nod Paris",
+                    link: "https://www.nod.paris/",
+                    title: "Client",
+                  },
+                  {
+                    id: 26,
+                    name: "Continental Productions",
+                    link: "https://continentalproductions.com/",
+                    title: null,
+                  },
+                ],
+              },
+              {
+                id: 4,
+                creditItem: [
+                  {
+                    id: 27,
+                    name: "NOD",
+                    link: null,
+                    title: "Post-prod",
+                  },
+                  {
+                    id: 28,
+                    name: "Doze Studio",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 29,
+                    name: "Benjamin Tessier",
+                    link: null,
+                    title: "Screen Design",
+                  },
+                  {
+                    id: 30,
+                    name: "Simon Braud",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 31,
+                    name: "Martin Girardeau",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 32,
+                    name: "Canelle",
+                    link: null,
+                    title: "Producer",
+                  },
+                  {
+                    id: 33,
+                    name: "Nico",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 34,
+                    name: "Auré",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 35,
+                    name: "Justine",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 36,
+                    name: "Guillaume Rebbot",
+                    link: null,
+                    title: "Agence",
+                  },
+                  {
+                    id: 37,
+                    name: "Aude Devaux",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 38,
+                    name: "Manon Mangaud",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 39,
+                    name: "Moritz Conzen",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 40,
+                    name: "Marc Garreta",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 41,
+                    name: "Magali Dauleu",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 42,
+                    name: "Sylvain Peraldi",
+                    link: null,
+                    title: "Clients",
+                  },
+                  {
+                    id: 43,
+                    name: "Veronique Le Tallec",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 44,
+                    name: "Julien Lascar",
+                    link: null,
+                    title: "DOP",
+                  },
+                  {
+                    id: 45,
+                    name: "Arthur Paux",
+                    link: null,
+                    title: "Color Grading",
+                  },
+                  {
+                    id: 46,
+                    name: "Sylvain Cattenoy",
+                    link: null,
+                    title: "Motion Designer",
+                  },
+                  {
+                    id: 47,
+                    name: "Mitom Space",
+                    link: null,
+                    title: "Editing",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        {
+          id: 10,
+          attributes: {
+            title: "Dampa - Thunderball ",
+            client: "Dampa Music",
+            intro: null,
+            content:
+              "<p>For their latest EP release, Doze Studio collaborated with the musical artist Dampa on the track \"Thunderball,\" crafting an innovative music video that integrates a unique visual language.<br><br>This project involved the creation of a special alphabet using signs and flags designed specifically for the band. The video features a monumental set design that blurs the lines between an aerial installation and an epileptic visual spectacle, enhancing the immersive experience of the music. This blend of custom graphic elements and dynamic staging brings a fresh visual interpretation to Dampa's music, reflecting the studio's capability in merging design with entertainment.</p>",
+            thumbnailDescription:
+              'Collaboration on "Thunderball" EP features a music video with a unique visual language, employing a custom alphabet and dynamic set design that merge innovative visuals with immersive musical experience.',
+            slug: "dampa-thunderball",
+            underOpacity: 0.8,
+            createdAt: "2024-05-14T09:35:56.876Z",
+            updatedAt: "2024-07-18T14:45:31.188Z",
+            publishedAt: "2024-05-14T09:36:49.477Z",
+            underVisualVimeo: "238076325",
+            displayProjectTitle: "Dampa",
+            underVisual: {
+              data: null,
+            },
+            thumbnailVisual: {
+              data: {
+                id: 102,
+                attributes: {
+                  name: "thunder mockup_i1.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "thunder_mockup_i1_19500c0127",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 1003.79,
+                  url: "/uploads/thunder_mockup_i1_19500c0127.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-14T09:16:08.372Z",
+                  updatedAt: "2024-05-16T09:57:44.399Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 10,
+                      title: "Dampa - Thunderball ",
+                      client: "Dampa Music",
+                      intro: null,
+                      content:
+                        "<p>For their latest EP release, Doze Studio collaborated with the musical artist Dampa on the track \"Thunderball,\" crafting an innovative music video that integrates a unique visual language.<br><br>This project involved the creation of a special alphabet using signs and flags designed specifically for the band. The video features a monumental set design that blurs the lines between an aerial installation and an epileptic visual spectacle, enhancing the immersive experience of the music. This blend of custom graphic elements and dynamic staging brings a fresh visual interpretation to Dampa's music, reflecting the studio's capability in merging design with entertainment.</p>",
+                      thumbnailDescription:
+                        'Collaboration on "Thunderball" EP features a music video with a unique visual language, employing a custom alphabet and dynamic set design that merge innovative visuals with immersive musical experience.',
+                      slug: "dampa-thunderball",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-14T09:35:56.876Z",
+                      updatedAt: "2024-07-18T14:45:31.188Z",
+                      publishedAt: "2024-05-14T09:36:49.477Z",
+                      underVisualVimeo: "238076325",
+                      displayProjectTitle: "Dampa",
+                    },
+                  ],
+                },
+              },
+            },
+            category: {
+              data: {
+                id: 19,
+                attributes: {
+                  name: "Scenography & Music Videos",
+                  createdAt: "2024-05-14T16:03:28.045Z",
+                  updatedAt: "2024-05-14T16:03:28.045Z",
+                },
+              },
+            },
+            infosList: [
+              {
+                id: 9,
+                creditItem: [
+                  {
+                    id: 48,
+                    name: "Dampa Music",
+                    link: "https://www.youtube.com/channel/UCox1tkBNIv_PdUCf0D68mRQ",
+                    title: "Client",
+                  },
+                ],
+              },
+              {
+                id: 10,
+                creditItem: [
+                  {
+                    id: 49,
+                    name: "Doze Studio",
+                    link: "https://doze.studio/",
+                    title: "Creative Direction",
+                  },
+                  {
+                    id: 50,
+                    name: "Benjamin Tessier",
+                    link: null,
+                    title: "Graphic design",
+                  },
+                  {
+                    id: 51,
+                    name: "Benjamin Tessier",
+                    link: null,
+                    title: "Motion Design",
+                  },
+                  {
+                    id: 52,
+                    name: "Lucas Martin Delaunay",
+                    link: null,
+                    title: "Editing",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        {
+          id: 9,
+          attributes: {
+            title: "Torticolia - Demo 360",
+            client: "Doze Studio",
+            intro: null,
+            content:
+              "<p>\"Torticolia\" is a personal experimental project created by Doze Studio, aimed at showcasing the studio's projects through an immersive and fun 360° video.<br><br>This interactive medium offers a dynamic and colorful exploration, allowing viewers to discover Doze Studio's creations from a new and interactive perspective. This initiative creates a unique user experience, transforming the way branding and motion design projects are perceived and appreciated.</p>",
+            thumbnailDescription:
+              '"Torticolia" is an experimental project by Doze Studio that uses an immersive 360° video to dynamically showcase its creative work.',
+            slug: "torticolia360",
+            underOpacity: 0.8,
+            createdAt: "2024-05-13T16:07:55.139Z",
+            updatedAt: "2024-05-16T10:03:34.366Z",
+            publishedAt: "2024-05-14T09:02:06.100Z",
+            underVisualVimeo: "946104843",
+            displayProjectTitle: "Torticolia",
+            underVisual: {
+              data: null,
+            },
+            thumbnailVisual: {
+              data: {
+                id: 204,
+                attributes: {
+                  name: "torticolia_THUMB.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "torticolia_THUMB_12c5dfdea2",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 307.55,
+                  url: "/uploads/torticolia_THUMB_12c5dfdea2.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-15T12:38:13.238Z",
+                  updatedAt: "2024-05-16T10:03:32.012Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 9,
+                      title: "Torticolia - Demo 360",
+                      client: "Doze Studio",
+                      intro: null,
+                      content:
+                        "<p>\"Torticolia\" is a personal experimental project created by Doze Studio, aimed at showcasing the studio's projects through an immersive and fun 360° video.<br><br>This interactive medium offers a dynamic and colorful exploration, allowing viewers to discover Doze Studio's creations from a new and interactive perspective. This initiative creates a unique user experience, transforming the way branding and motion design projects are perceived and appreciated.</p>",
+                      thumbnailDescription:
+                        '"Torticolia" is an experimental project by Doze Studio that uses an immersive 360° video to dynamically showcase its creative work.',
+                      slug: "torticolia360",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T16:07:55.139Z",
+                      updatedAt: "2024-05-16T10:03:34.366Z",
+                      publishedAt: "2024-05-14T09:02:06.100Z",
+                      underVisualVimeo: "946104843",
+                      displayProjectTitle: "Torticolia",
+                    },
+                  ],
+                },
+              },
+            },
+            category: {
+              data: {
+                id: 20,
+                attributes: {
+                  name: "Personal Project",
+                  createdAt: "2024-05-15T10:11:25.556Z",
+                  updatedAt: "2024-05-15T10:11:25.556Z",
+                },
+              },
+            },
+            infosList: [
+              {
+                id: 18,
+                creditItem: [
+                  {
+                    id: 82,
+                    name: "Benjamin Tessier",
+                    link: null,
+                    title: "Motion Design",
+                  },
+                  {
+                    id: 83,
+                    name: "Martin Girardeau",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 84,
+                    name: "Laura Amaro",
+                    link: null,
+                    title: "Additional Props",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        {
+          id: 12,
+          attributes: {
+            title: "Farcry 6 - Lost Between Worlds",
+            client: "Ubisoft",
+            intro: null,
+            content:
+              '<p>Doze Studio recently collaborated on the latest expansion of Ubisoft\'s FarCry 6, titled "Lost Between Worlds." Our role involved animating, texturing, and lighting the iconic sphere of this season in 3D.<br><br>Ubisoft provided us with the initial 3D models from the game, which we meticulously reworked according to their creative direction. In addition to these elements, Doze Studio was also responsible for the animation of the title sequence, which will be reused throughout the promotional campaign. Thanks to Blackmeal for their trust.</p>',
+            thumbnailDescription:
+              "Title animation 'Lost Between Worlds' for FarCry 6 in-game and for its promotional campaign.",
+            slug: "farcry",
+            underOpacity: 0.8,
+            createdAt: "2024-05-15T12:05:54.528Z",
+            updatedAt: "2024-05-16T09:58:36.102Z",
+            publishedAt: "2024-05-15T12:09:49.866Z",
+            underVisualVimeo: null,
+            displayProjectTitle: "Farcry 6",
+            underVisual: {
+              data: {
+                id: 184,
+                attributes: {
+                  name: "220829_FARCRY_LONG_COMPO_04.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "220829_FARCRY_LONG_COMPO_04_4ef62f0520",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 956.58,
+                  url: "/uploads/220829_FARCRY_LONG_COMPO_04_4ef62f0520.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-15T12:06:52.815Z",
+                  updatedAt: "2024-05-16T09:58:33.728Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 12,
+                      title: "Farcry 6 - Lost Between Worlds",
+                      client: "Ubisoft",
+                      intro: null,
+                      content:
+                        '<p>Doze Studio recently collaborated on the latest expansion of Ubisoft\'s FarCry 6, titled "Lost Between Worlds." Our role involved animating, texturing, and lighting the iconic sphere of this season in 3D.<br><br>Ubisoft provided us with the initial 3D models from the game, which we meticulously reworked according to their creative direction. In addition to these elements, Doze Studio was also responsible for the animation of the title sequence, which will be reused throughout the promotional campaign. Thanks to Blackmeal for their trust.</p>',
+                      thumbnailDescription:
+                        "Title animation 'Lost Between Worlds' for FarCry 6 in-game and for its promotional campaign.",
+                      slug: "farcry",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-15T12:05:54.528Z",
+                      updatedAt: "2024-05-16T09:58:36.102Z",
+                      publishedAt: "2024-05-15T12:09:49.866Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Farcry 6",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 12,
+                      title: "Farcry 6 - Lost Between Worlds",
+                      client: "Ubisoft",
+                      intro: null,
+                      content:
+                        '<p>Doze Studio recently collaborated on the latest expansion of Ubisoft\'s FarCry 6, titled "Lost Between Worlds." Our role involved animating, texturing, and lighting the iconic sphere of this season in 3D.<br><br>Ubisoft provided us with the initial 3D models from the game, which we meticulously reworked according to their creative direction. In addition to these elements, Doze Studio was also responsible for the animation of the title sequence, which will be reused throughout the promotional campaign. Thanks to Blackmeal for their trust.</p>',
+                      thumbnailDescription:
+                        "Title animation 'Lost Between Worlds' for FarCry 6 in-game and for its promotional campaign.",
+                      slug: "farcry",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-15T12:05:54.528Z",
+                      updatedAt: "2024-05-16T09:58:36.102Z",
+                      publishedAt: "2024-05-15T12:09:49.866Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Farcry 6",
+                    },
+                  ],
+                },
+              },
+            },
+            thumbnailVisual: {
+              data: {
+                id: 184,
+                attributes: {
+                  name: "220829_FARCRY_LONG_COMPO_04.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "220829_FARCRY_LONG_COMPO_04_4ef62f0520",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 956.58,
+                  url: "/uploads/220829_FARCRY_LONG_COMPO_04_4ef62f0520.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-15T12:06:52.815Z",
+                  updatedAt: "2024-05-16T09:58:33.728Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 12,
+                      title: "Farcry 6 - Lost Between Worlds",
+                      client: "Ubisoft",
+                      intro: null,
+                      content:
+                        '<p>Doze Studio recently collaborated on the latest expansion of Ubisoft\'s FarCry 6, titled "Lost Between Worlds." Our role involved animating, texturing, and lighting the iconic sphere of this season in 3D.<br><br>Ubisoft provided us with the initial 3D models from the game, which we meticulously reworked according to their creative direction. In addition to these elements, Doze Studio was also responsible for the animation of the title sequence, which will be reused throughout the promotional campaign. Thanks to Blackmeal for their trust.</p>',
+                      thumbnailDescription:
+                        "Title animation 'Lost Between Worlds' for FarCry 6 in-game and for its promotional campaign.",
+                      slug: "farcry",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-15T12:05:54.528Z",
+                      updatedAt: "2024-05-16T09:58:36.102Z",
+                      publishedAt: "2024-05-15T12:09:49.866Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Farcry 6",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 12,
+                      title: "Farcry 6 - Lost Between Worlds",
+                      client: "Ubisoft",
+                      intro: null,
+                      content:
+                        '<p>Doze Studio recently collaborated on the latest expansion of Ubisoft\'s FarCry 6, titled "Lost Between Worlds." Our role involved animating, texturing, and lighting the iconic sphere of this season in 3D.<br><br>Ubisoft provided us with the initial 3D models from the game, which we meticulously reworked according to their creative direction. In addition to these elements, Doze Studio was also responsible for the animation of the title sequence, which will be reused throughout the promotional campaign. Thanks to Blackmeal for their trust.</p>',
+                      thumbnailDescription:
+                        "Title animation 'Lost Between Worlds' for FarCry 6 in-game and for its promotional campaign.",
+                      slug: "farcry",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-15T12:05:54.528Z",
+                      updatedAt: "2024-05-16T09:58:36.102Z",
+                      publishedAt: "2024-05-15T12:09:49.866Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Farcry 6",
+                    },
+                  ],
+                },
+              },
+            },
+            category: {
+              data: {
+                id: 11,
+                attributes: {
+                  name: "Motion Design",
+                  createdAt: "2024-05-07T13:44:12.860Z",
+                  updatedAt: "2024-05-14T14:55:21.892Z",
+                },
+              },
+            },
+            infosList: [
+              {
+                id: 21,
+                creditItem: [
+                  {
+                    id: 94,
+                    name: "Ubisoft",
+                    link: "https://www.ubisoft.com/fr-fr/",
+                    title: "Client",
+                  },
+                ],
+              },
+              {
+                id: 22,
+                creditItem: [],
+              },
+              {
+                id: 23,
+                creditItem: [
+                  {
+                    id: 95,
+                    name: "Blackmeal",
+                    link: "https://blackmeal.com/",
+                    title: "Production",
+                  },
+                  {
+                    id: 96,
+                    name: "Benjamin Tessier",
+                    link: null,
+                    title: "Motion Design",
+                  },
+                  {
+                    id: 97,
+                    name: "Martin Girardeau",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 98,
+                    name: "Martin Girardeau",
+                    link: null,
+                    title: "Compositing",
+                  },
+                  {
+                    id: 99,
+                    name: "Clément Perron",
+                    link: null,
+                    title: null,
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        {
+          id: 7,
+          attributes: {
+            title: "Perspective Fund - Branding",
+            client: "Antinomy",
+            intro: null,
+            content:
+              "<p>Doze Studio was commissioned to develop a new branding for Perspective Fund, a production company using storytelling to drive social change. The innovative branding utilizes anamorphic illusions and optical effects, mirroring Perspective's mission of shifting views and inspiring action. The design highlights the diverse media platforms used by Perspective to support impactful storytelling, emphasizing their commitment to social and economic inclusivity through strategic partnerships with storytellers, journalists, and other stakeholders.</p>",
+            thumbnailDescription:
+              "Rebranding Perspective Found with anamorphic illusions, emphasizing transformative storytelling and social inclusivity.",
+            slug: "perspective",
+            underOpacity: 0.8,
+            createdAt: "2024-05-13T15:37:03.535Z",
+            updatedAt: "2024-05-16T10:01:52.817Z",
+            publishedAt: "2024-05-13T15:37:11.550Z",
+            underVisualVimeo: null,
+            displayProjectTitle: "Perspective Fund",
+            underVisual: {
+              data: {
+                id: 78,
+                attributes: {
+                  name: "LONG FILM.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "LONG_FILM_e47e59493d",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 479.53,
+                  url: "/uploads/LONG_FILM_e47e59493d.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-13T15:36:43.904Z",
+                  updatedAt: "2024-05-16T10:01:50.943Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 7,
+                      title: "Perspective Fund - Branding",
+                      client: "Antinomy",
+                      intro: null,
+                      content:
+                        "<p>Doze Studio was commissioned to develop a new branding for Perspective Fund, a production company using storytelling to drive social change. The innovative branding utilizes anamorphic illusions and optical effects, mirroring Perspective's mission of shifting views and inspiring action. The design highlights the diverse media platforms used by Perspective to support impactful storytelling, emphasizing their commitment to social and economic inclusivity through strategic partnerships with storytellers, journalists, and other stakeholders.</p>",
+                      thumbnailDescription:
+                        "Rebranding Perspective Found with anamorphic illusions, emphasizing transformative storytelling and social inclusivity.",
+                      slug: "perspective",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T15:37:03.535Z",
+                      updatedAt: "2024-05-16T10:01:52.817Z",
+                      publishedAt: "2024-05-13T15:37:11.550Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Perspective Fund",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 7,
+                      title: "Perspective Fund - Branding",
+                      client: "Antinomy",
+                      intro: null,
+                      content:
+                        "<p>Doze Studio was commissioned to develop a new branding for Perspective Fund, a production company using storytelling to drive social change. The innovative branding utilizes anamorphic illusions and optical effects, mirroring Perspective's mission of shifting views and inspiring action. The design highlights the diverse media platforms used by Perspective to support impactful storytelling, emphasizing their commitment to social and economic inclusivity through strategic partnerships with storytellers, journalists, and other stakeholders.</p>",
+                      thumbnailDescription:
+                        "Rebranding Perspective Found with anamorphic illusions, emphasizing transformative storytelling and social inclusivity.",
+                      slug: "perspective",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T15:37:03.535Z",
+                      updatedAt: "2024-05-16T10:01:52.817Z",
+                      publishedAt: "2024-05-13T15:37:11.550Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Perspective Fund",
+                    },
+                  ],
+                },
+              },
+            },
+            thumbnailVisual: {
+              data: {
+                id: 78,
+                attributes: {
+                  name: "LONG FILM.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "LONG_FILM_e47e59493d",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 479.53,
+                  url: "/uploads/LONG_FILM_e47e59493d.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-13T15:36:43.904Z",
+                  updatedAt: "2024-05-16T10:01:50.943Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 7,
+                      title: "Perspective Fund - Branding",
+                      client: "Antinomy",
+                      intro: null,
+                      content:
+                        "<p>Doze Studio was commissioned to develop a new branding for Perspective Fund, a production company using storytelling to drive social change. The innovative branding utilizes anamorphic illusions and optical effects, mirroring Perspective's mission of shifting views and inspiring action. The design highlights the diverse media platforms used by Perspective to support impactful storytelling, emphasizing their commitment to social and economic inclusivity through strategic partnerships with storytellers, journalists, and other stakeholders.</p>",
+                      thumbnailDescription:
+                        "Rebranding Perspective Found with anamorphic illusions, emphasizing transformative storytelling and social inclusivity.",
+                      slug: "perspective",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T15:37:03.535Z",
+                      updatedAt: "2024-05-16T10:01:52.817Z",
+                      publishedAt: "2024-05-13T15:37:11.550Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Perspective Fund",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 7,
+                      title: "Perspective Fund - Branding",
+                      client: "Antinomy",
+                      intro: null,
+                      content:
+                        "<p>Doze Studio was commissioned to develop a new branding for Perspective Fund, a production company using storytelling to drive social change. The innovative branding utilizes anamorphic illusions and optical effects, mirroring Perspective's mission of shifting views and inspiring action. The design highlights the diverse media platforms used by Perspective to support impactful storytelling, emphasizing their commitment to social and economic inclusivity through strategic partnerships with storytellers, journalists, and other stakeholders.</p>",
+                      thumbnailDescription:
+                        "Rebranding Perspective Found with anamorphic illusions, emphasizing transformative storytelling and social inclusivity.",
+                      slug: "perspective",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T15:37:03.535Z",
+                      updatedAt: "2024-05-16T10:01:52.817Z",
+                      publishedAt: "2024-05-13T15:37:11.550Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Perspective Fund",
+                    },
+                  ],
+                },
+              },
+            },
+            category: {
+              data: {
+                id: 15,
+                attributes: {
+                  name: "Branding & Identity",
+                  createdAt: "2024-05-13T15:00:41.291Z",
+                  updatedAt: "2024-05-14T14:54:45.170Z",
+                },
+              },
+            },
+            infosList: [],
+          },
+        },
+        {
+          id: 8,
+          attributes: {
+            title: "Martin Solveig x Raphaella - Allo Allo",
+            client: "Orage Paris",
+            intro: null,
+            content:
+              "<p>For the music video project for Martin Solveig and Raphaella, directed by Valentin Guiod, Doze Studio was approached by Orage Studio to work on a part of the video. This clip is notable for its collaborative creation that blends 2D, 3D, stop-motion, collage, and painting.<br><br>True to its reputation, Doze Studio designed its contribution using its characteristic 3D motion design style, thus contributing to a rich and varied visual experience. This collaboration allowed several artists, both French and international, to implement their creative vision, each bringing their unique touch to the overall project. This clip represents a beautiful example of creative synergy, where the artistic freedom of each contributes to creating a dynamic and captivating final product.</p>",
+            thumbnailDescription:
+              "Collaboration on Martin Solveig and Raphaella - Allo Allo music video, blending multiple artistic techniques for a visually rich and dynamic creation.",
+            slug: "martinsolveig-alloallo",
+            underOpacity: 0.8,
+            createdAt: "2024-05-13T16:01:40.800Z",
+            updatedAt: "2024-05-16T09:59:40.008Z",
+            publishedAt: "2024-05-13T16:02:27.837Z",
+            underVisualVimeo: null,
+            displayProjectTitle: "Martin Solveig",
+            underVisual: {
+              data: {
+                id: 88,
+                attributes: {
+                  name: "MASTER.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "MASTER_4c319c010f",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 3599.79,
+                  url: "/uploads/MASTER_4c319c010f.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-13T15:58:00.036Z",
+                  updatedAt: "2024-05-16T09:59:37.682Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 8,
+                      title: "Martin Solveig x Raphaella - Allo Allo",
+                      client: "Orage Paris",
+                      intro: null,
+                      content:
+                        "<p>For the music video project for Martin Solveig and Raphaella, directed by Valentin Guiod, Doze Studio was approached by Orage Studio to work on a part of the video. This clip is notable for its collaborative creation that blends 2D, 3D, stop-motion, collage, and painting.<br><br>True to its reputation, Doze Studio designed its contribution using its characteristic 3D motion design style, thus contributing to a rich and varied visual experience. This collaboration allowed several artists, both French and international, to implement their creative vision, each bringing their unique touch to the overall project. This clip represents a beautiful example of creative synergy, where the artistic freedom of each contributes to creating a dynamic and captivating final product.</p>",
+                      thumbnailDescription:
+                        "Collaboration on Martin Solveig and Raphaella - Allo Allo music video, blending multiple artistic techniques for a visually rich and dynamic creation.",
+                      slug: "martinsolveig-alloallo",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T16:01:40.800Z",
+                      updatedAt: "2024-05-16T09:59:40.008Z",
+                      publishedAt: "2024-05-13T16:02:27.837Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Martin Solveig",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 8,
+                      title: "Martin Solveig x Raphaella - Allo Allo",
+                      client: "Orage Paris",
+                      intro: null,
+                      content:
+                        "<p>For the music video project for Martin Solveig and Raphaella, directed by Valentin Guiod, Doze Studio was approached by Orage Studio to work on a part of the video. This clip is notable for its collaborative creation that blends 2D, 3D, stop-motion, collage, and painting.<br><br>True to its reputation, Doze Studio designed its contribution using its characteristic 3D motion design style, thus contributing to a rich and varied visual experience. This collaboration allowed several artists, both French and international, to implement their creative vision, each bringing their unique touch to the overall project. This clip represents a beautiful example of creative synergy, where the artistic freedom of each contributes to creating a dynamic and captivating final product.</p>",
+                      thumbnailDescription:
+                        "Collaboration on Martin Solveig and Raphaella - Allo Allo music video, blending multiple artistic techniques for a visually rich and dynamic creation.",
+                      slug: "martinsolveig-alloallo",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T16:01:40.800Z",
+                      updatedAt: "2024-05-16T09:59:40.008Z",
+                      publishedAt: "2024-05-13T16:02:27.837Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Martin Solveig",
+                    },
+                  ],
+                },
+              },
+            },
+            thumbnailVisual: {
+              data: {
+                id: 88,
+                attributes: {
+                  name: "MASTER.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "MASTER_4c319c010f",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 3599.79,
+                  url: "/uploads/MASTER_4c319c010f.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-13T15:58:00.036Z",
+                  updatedAt: "2024-05-16T09:59:37.682Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 8,
+                      title: "Martin Solveig x Raphaella - Allo Allo",
+                      client: "Orage Paris",
+                      intro: null,
+                      content:
+                        "<p>For the music video project for Martin Solveig and Raphaella, directed by Valentin Guiod, Doze Studio was approached by Orage Studio to work on a part of the video. This clip is notable for its collaborative creation that blends 2D, 3D, stop-motion, collage, and painting.<br><br>True to its reputation, Doze Studio designed its contribution using its characteristic 3D motion design style, thus contributing to a rich and varied visual experience. This collaboration allowed several artists, both French and international, to implement their creative vision, each bringing their unique touch to the overall project. This clip represents a beautiful example of creative synergy, where the artistic freedom of each contributes to creating a dynamic and captivating final product.</p>",
+                      thumbnailDescription:
+                        "Collaboration on Martin Solveig and Raphaella - Allo Allo music video, blending multiple artistic techniques for a visually rich and dynamic creation.",
+                      slug: "martinsolveig-alloallo",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T16:01:40.800Z",
+                      updatedAt: "2024-05-16T09:59:40.008Z",
+                      publishedAt: "2024-05-13T16:02:27.837Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Martin Solveig",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 8,
+                      title: "Martin Solveig x Raphaella - Allo Allo",
+                      client: "Orage Paris",
+                      intro: null,
+                      content:
+                        "<p>For the music video project for Martin Solveig and Raphaella, directed by Valentin Guiod, Doze Studio was approached by Orage Studio to work on a part of the video. This clip is notable for its collaborative creation that blends 2D, 3D, stop-motion, collage, and painting.<br><br>True to its reputation, Doze Studio designed its contribution using its characteristic 3D motion design style, thus contributing to a rich and varied visual experience. This collaboration allowed several artists, both French and international, to implement their creative vision, each bringing their unique touch to the overall project. This clip represents a beautiful example of creative synergy, where the artistic freedom of each contributes to creating a dynamic and captivating final product.</p>",
+                      thumbnailDescription:
+                        "Collaboration on Martin Solveig and Raphaella - Allo Allo music video, blending multiple artistic techniques for a visually rich and dynamic creation.",
+                      slug: "martinsolveig-alloallo",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T16:01:40.800Z",
+                      updatedAt: "2024-05-16T09:59:40.008Z",
+                      publishedAt: "2024-05-13T16:02:27.837Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Martin Solveig",
+                    },
+                  ],
+                },
+              },
+            },
+            category: {
+              data: {
+                id: 21,
+                attributes: {
+                  name: "Music Video",
+                  createdAt: "2024-05-15T11:18:55.530Z",
+                  updatedAt: "2024-05-15T11:18:55.530Z",
+                },
+              },
+            },
+            infosList: [
+              {
+                id: 11,
+                creditItem: [
+                  {
+                    id: 53,
+                    name: "Orage Studio",
+                    link: "https://orage.studio/",
+                    title: "Client",
+                  },
+                ],
+              },
+              {
+                id: 12,
+                creditItem: [
+                  {
+                    id: 54,
+                    name: "OMAR Films",
+                    link: "https://omarfilms.tv/",
+                    title: "Production",
+                  },
+                  {
+                    id: 55,
+                    name: "Valentin Guiod",
+                    link: null,
+                    title: "Directed",
+                  },
+                  {
+                    id: 56,
+                    name: "Orage Studio",
+                    link: "https://orage.studio/",
+                    title: "Post Production",
+                  },
+                  {
+                    id: 57,
+                    name: "Doze Studio",
+                    link: "https://doze.studio/",
+                    title: "Creative Direction",
+                  },
+                  {
+                    id: 58,
+                    name: "Clément Perron",
+                    link: null,
+                    title: "Producer",
+                  },
+                  {
+                    id: 59,
+                    name: "Benjamin Tessier",
+                    link: null,
+                    title: "Artistic Direction",
+                  },
+                  {
+                    id: 60,
+                    name: "Benjamin Tessier",
+                    link: null,
+                    title: "Motion Design",
+                  },
+                  {
+                    id: 61,
+                    name: "Martin Girardeau",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 62,
+                    name: "Benjamin Tessier",
+                    link: null,
+                    title: "Compositing",
+                  },
+                  {
+                    id: 63,
+                    name: "Clément Perron",
+                    link: null,
+                    title: null,
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        {
+          id: 6,
+          attributes: {
+            title: "Rebranding Nope Collectif",
+            client: "Nope Collectif",
+            intro: null,
+            content:
+              "<p>The NOPE collective, initiated by Doze Studio, challenges the conventional idea of a co-working space by transforming into a hub brimming with creativity and innovation. Created to diversify Doze's network and deepen its creative reach, the collective unites talented designers, each bringing their own vision and expertise.<br><br>In this space where design and animation intersect, Doze has crafted a distinctive visual identity rich with anecdotes that reflect years of collaborative work and shared adventures. Everything is designed to ensure that the collective's members feel fully integrated and proud of their independent roles within this community of enthusiasts.</p>",
+            thumbnailDescription:
+              " NOPE collective, launched by Doze Studio, reimagines co-working by melding design and animation in a creative hub that enhances collaboration and fosters a unique visual identity.",
+            slug: "nope-collectif",
+            underOpacity: 0.8,
+            createdAt: "2024-05-13T15:00:33.057Z",
+            updatedAt: "2024-05-16T10:05:44.011Z",
+            publishedAt: "2024-05-13T15:04:39.787Z",
+            underVisualVimeo: null,
+            displayProjectTitle: "Nope Collectif",
+            underVisual: {
+              data: {
+                id: 61,
+                attributes: {
+                  name: "_DOZE nope branding_MASTER.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "DOZE_nope_branding_MASTER_25ca6ae2c4",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 4911.69,
+                  url: "/uploads/DOZE_nope_branding_MASTER_25ca6ae2c4.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-13T14:58:36.816Z",
+                  updatedAt: "2024-05-16T10:05:41.385Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 6,
+                      title: "Rebranding Nope Collectif",
+                      client: "Nope Collectif",
+                      intro: null,
+                      content:
+                        "<p>The NOPE collective, initiated by Doze Studio, challenges the conventional idea of a co-working space by transforming into a hub brimming with creativity and innovation. Created to diversify Doze's network and deepen its creative reach, the collective unites talented designers, each bringing their own vision and expertise.<br><br>In this space where design and animation intersect, Doze has crafted a distinctive visual identity rich with anecdotes that reflect years of collaborative work and shared adventures. Everything is designed to ensure that the collective's members feel fully integrated and proud of their independent roles within this community of enthusiasts.</p>",
+                      thumbnailDescription:
+                        " NOPE collective, launched by Doze Studio, reimagines co-working by melding design and animation in a creative hub that enhances collaboration and fosters a unique visual identity.",
+                      slug: "nope-collectif",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T15:00:33.057Z",
+                      updatedAt: "2024-05-16T10:05:44.011Z",
+                      publishedAt: "2024-05-13T15:04:39.787Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Nope Collectif",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 6,
+                      title: "Rebranding Nope Collectif",
+                      client: "Nope Collectif",
+                      intro: null,
+                      content:
+                        "<p>The NOPE collective, initiated by Doze Studio, challenges the conventional idea of a co-working space by transforming into a hub brimming with creativity and innovation. Created to diversify Doze's network and deepen its creative reach, the collective unites talented designers, each bringing their own vision and expertise.<br><br>In this space where design and animation intersect, Doze has crafted a distinctive visual identity rich with anecdotes that reflect years of collaborative work and shared adventures. Everything is designed to ensure that the collective's members feel fully integrated and proud of their independent roles within this community of enthusiasts.</p>",
+                      thumbnailDescription:
+                        " NOPE collective, launched by Doze Studio, reimagines co-working by melding design and animation in a creative hub that enhances collaboration and fosters a unique visual identity.",
+                      slug: "nope-collectif",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T15:00:33.057Z",
+                      updatedAt: "2024-05-16T10:05:44.011Z",
+                      publishedAt: "2024-05-13T15:04:39.787Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Nope Collectif",
+                    },
+                  ],
+                },
+              },
+            },
+            thumbnailVisual: {
+              data: {
+                id: 61,
+                attributes: {
+                  name: "_DOZE nope branding_MASTER.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "DOZE_nope_branding_MASTER_25ca6ae2c4",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 4911.69,
+                  url: "/uploads/DOZE_nope_branding_MASTER_25ca6ae2c4.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-13T14:58:36.816Z",
+                  updatedAt: "2024-05-16T10:05:41.385Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 6,
+                      title: "Rebranding Nope Collectif",
+                      client: "Nope Collectif",
+                      intro: null,
+                      content:
+                        "<p>The NOPE collective, initiated by Doze Studio, challenges the conventional idea of a co-working space by transforming into a hub brimming with creativity and innovation. Created to diversify Doze's network and deepen its creative reach, the collective unites talented designers, each bringing their own vision and expertise.<br><br>In this space where design and animation intersect, Doze has crafted a distinctive visual identity rich with anecdotes that reflect years of collaborative work and shared adventures. Everything is designed to ensure that the collective's members feel fully integrated and proud of their independent roles within this community of enthusiasts.</p>",
+                      thumbnailDescription:
+                        " NOPE collective, launched by Doze Studio, reimagines co-working by melding design and animation in a creative hub that enhances collaboration and fosters a unique visual identity.",
+                      slug: "nope-collectif",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T15:00:33.057Z",
+                      updatedAt: "2024-05-16T10:05:44.011Z",
+                      publishedAt: "2024-05-13T15:04:39.787Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Nope Collectif",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 6,
+                      title: "Rebranding Nope Collectif",
+                      client: "Nope Collectif",
+                      intro: null,
+                      content:
+                        "<p>The NOPE collective, initiated by Doze Studio, challenges the conventional idea of a co-working space by transforming into a hub brimming with creativity and innovation. Created to diversify Doze's network and deepen its creative reach, the collective unites talented designers, each bringing their own vision and expertise.<br><br>In this space where design and animation intersect, Doze has crafted a distinctive visual identity rich with anecdotes that reflect years of collaborative work and shared adventures. Everything is designed to ensure that the collective's members feel fully integrated and proud of their independent roles within this community of enthusiasts.</p>",
+                      thumbnailDescription:
+                        " NOPE collective, launched by Doze Studio, reimagines co-working by melding design and animation in a creative hub that enhances collaboration and fosters a unique visual identity.",
+                      slug: "nope-collectif",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T15:00:33.057Z",
+                      updatedAt: "2024-05-16T10:05:44.011Z",
+                      publishedAt: "2024-05-13T15:04:39.787Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Nope Collectif",
+                    },
+                  ],
+                },
+              },
+            },
+            category: {
+              data: {
+                id: 15,
+                attributes: {
+                  name: "Branding & Identity",
+                  createdAt: "2024-05-13T15:00:41.291Z",
+                  updatedAt: "2024-05-14T14:54:45.170Z",
+                },
+              },
+            },
+            infosList: [
+              {
+                id: 15,
+                creditItem: [
+                  {
+                    id: 74,
+                    name: "Nope Collectif",
+                    link: null,
+                    title: "Client",
+                  },
+                ],
+              },
+              {
+                id: 16,
+                creditItem: [
+                  {
+                    id: 75,
+                    name: "Doze Studio",
+                    link: null,
+                    title: "Creative Direction",
+                  },
+                  {
+                    id: 76,
+                    name: "Benjamin Tessier",
+                    link: null,
+                    title: "Graphic Design",
+                  },
+                  {
+                    id: 77,
+                    name: "Benjamin Tessier",
+                    link: null,
+                    title: "Motion Design",
+                  },
+                  {
+                    id: 78,
+                    name: "Martin Girardeau",
+                    link: null,
+                    title: null,
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        {
+          id: 13,
+          attributes: {
+            title: "Heiwa - The Serene Paper",
+            client: "Heiwa",
+            intro: null,
+            content:
+              '<p>For the "HEIWA - THE SERENE PAPER" project, in collaboration with Fanfare Paris, Doze Studio incorporated a Heiwa heat pump into a living decor illustrated by a Jouy-style wallpaper.<br><br>The air circulated by the device animates bucolic and relaxing scenes, creating a serene atmosphere. This artistic design transforms a functional product into an aesthetic element of the decor, reflecting Doze Studio\'s commitment to merging functionality and style in a harmonious domestic setting.</p>',
+            thumbnailDescription:
+              "A heat pump is seamlessly integrated into a Jouy-style wallpaper, animating tranquil scenes and transforming the appliance into a stylish and functional part of the home decor.",
+            slug: "heiwapaper",
+            underOpacity: 0.8,
+            createdAt: "2024-05-15T12:20:38.996Z",
+            updatedAt: "2024-05-16T09:59:10.745Z",
+            publishedAt: "2024-05-15T12:27:52.670Z",
+            underVisualVimeo: null,
+            displayProjectTitle: "Heiwa",
+            underVisual: {
+              data: {
+                id: 209,
+                attributes: {
+                  name: "HEIWA_DIRECTORSCUT_sans packshot.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "HEIWA_DIRECTORSCUT_sans_packshot_921d5dfd2c",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 15213.21,
+                  url: "/uploads/HEIWA_DIRECTORSCUT_sans_packshot_921d5dfd2c.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-15T15:05:25.744Z",
+                  updatedAt: "2024-05-15T15:19:50.677Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 13,
+                      title: "Heiwa - The Serene Paper",
+                      client: "Heiwa",
+                      intro: null,
+                      content:
+                        '<p>For the "HEIWA - THE SERENE PAPER" project, in collaboration with Fanfare Paris, Doze Studio incorporated a Heiwa heat pump into a living decor illustrated by a Jouy-style wallpaper.<br><br>The air circulated by the device animates bucolic and relaxing scenes, creating a serene atmosphere. This artistic design transforms a functional product into an aesthetic element of the decor, reflecting Doze Studio\'s commitment to merging functionality and style in a harmonious domestic setting.</p>',
+                      thumbnailDescription:
+                        "A heat pump is seamlessly integrated into a Jouy-style wallpaper, animating tranquil scenes and transforming the appliance into a stylish and functional part of the home decor.",
+                      slug: "heiwapaper",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-15T12:20:38.996Z",
+                      updatedAt: "2024-05-16T09:59:10.745Z",
+                      publishedAt: "2024-05-15T12:27:52.670Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Heiwa",
+                    },
+                  ],
+                },
+              },
+            },
+            thumbnailVisual: {
+              data: {
+                id: 190,
+                attributes: {
+                  name: "HEIWA_DIRECTORSCUT_3.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "HEIWA_DIRECTORSCUT_3_39f96aecb4",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 2458.55,
+                  url: "/uploads/HEIWA_DIRECTORSCUT_3_39f96aecb4.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-15T12:22:11.240Z",
+                  updatedAt: "2024-05-16T09:59:08.645Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 13,
+                      title: "Heiwa - The Serene Paper",
+                      client: "Heiwa",
+                      intro: null,
+                      content:
+                        '<p>For the "HEIWA - THE SERENE PAPER" project, in collaboration with Fanfare Paris, Doze Studio incorporated a Heiwa heat pump into a living decor illustrated by a Jouy-style wallpaper.<br><br>The air circulated by the device animates bucolic and relaxing scenes, creating a serene atmosphere. This artistic design transforms a functional product into an aesthetic element of the decor, reflecting Doze Studio\'s commitment to merging functionality and style in a harmonious domestic setting.</p>',
+                      thumbnailDescription:
+                        "A heat pump is seamlessly integrated into a Jouy-style wallpaper, animating tranquil scenes and transforming the appliance into a stylish and functional part of the home decor.",
+                      slug: "heiwapaper",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-15T12:20:38.996Z",
+                      updatedAt: "2024-05-16T09:59:10.745Z",
+                      publishedAt: "2024-05-15T12:27:52.670Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Heiwa",
+                    },
+                  ],
+                },
+              },
+            },
+            category: {
+              data: {
+                id: 17,
+                attributes: {
+                  name: "Advertising",
+                  createdAt: "2024-05-14T14:57:04.669Z",
+                  updatedAt: "2024-05-14T14:57:04.669Z",
+                },
+              },
+            },
+            infosList: [
+              {
+                id: 19,
+                creditItem: [
+                  {
+                    id: 85,
+                    name: "Fanfare Paris",
+                    link: "https://www.fanfare.paris/",
+                    title: "Client",
+                  },
+                ],
+              },
+              {
+                id: 20,
+                creditItem: [
+                  {
+                    id: 86,
+                    name: "Doze Studio",
+                    link: "https://doze.studio/",
+                    title: "Creative Direction",
+                  },
+                  {
+                    id: 87,
+                    name: "Clément Perron",
+                    link: null,
+                    title: "Producer ",
+                  },
+                  {
+                    id: 88,
+                    name: "Tom Zarka",
+                    link: null,
+                    title: "Illustration",
+                  },
+                  {
+                    id: 89,
+                    name: "Benjamin Tessier",
+                    link: null,
+                    title: "Motion Design 3D",
+                  },
+                  {
+                    id: 90,
+                    name: "Martin Girardeau",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 91,
+                    name: "Flore Montmory",
+                    link: null,
+                    title: "Traditional Animation",
+                  },
+                  {
+                    id: 92,
+                    name: "Martin Girardeau",
+                    link: null,
+                    title: "Compositing",
+                  },
+                  {
+                    id: 93,
+                    name: "Discal Studio",
+                    link: "https://discalstudio.com/",
+                    title: "Sound",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        {
+          id: 15,
+          attributes: {
+            title: "Alltta Curio ",
+            client: "Alltta",
+            intro: null,
+            content:
+              "<p>For Alltta's latest album, \"Curio,\" Doze Studio was tasked with creating two album covers. Drawing inspiration from a list of elements found in the group's lyrics, we aimed to reflect a duality between the robotic aspect of 20syl's music and the organic essence of J.Medeiros' voice.&nbsp;</p><p>The album, aptly titled \"Curio,\" required each element to evoke curiosity, strangeness, and the bizarre. Our designs seamlessly blend mechanical and natural themes, offering a visually stimulating representation of the album's concept that invites listeners to delve deeper into the unique soundscape created by Alltta.</p>",
+            thumbnailDescription:
+              "For Alltta's \"Curio\" album, Doze Studio designed two covers highlighting the contrast between 20syl's robotic music and J.Medeiros's organic voice. The designs evoke curiosity and oddity, blending mechanical and natural elements.",
+            slug: "allttacurioartwork",
+            underOpacity: 0.8,
+            createdAt: "2024-07-02T12:42:39.163Z",
+            updatedAt: "2024-07-02T14:21:38.634Z",
+            publishedAt: "2024-07-02T13:11:22.357Z",
+            underVisualVimeo: null,
+            displayProjectTitle: "Alltta Curio",
+            underVisual: {
+              data: {
+                id: 248,
+                attributes: {
+                  name: "Y2meta-app-AllttA - _Curio_ Part I [Official Video]-(1080p).mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: null,
+                  hash: "Y2meta_app_Alltt_A_Curio_Part_I_Official_Video_1080p_37f583db02",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 55718.38,
+                  url: "/uploads/Y2meta_app_Alltt_A_Curio_Part_I_Official_Video_1080p_37f583db02.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-07-02T12:44:55.904Z",
+                  updatedAt: "2024-07-02T12:44:55.904Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 15,
+                      title: "Alltta Curio ",
+                      client: "Alltta",
+                      intro: null,
+                      content:
+                        "<p>For Alltta's latest album, \"Curio,\" Doze Studio was tasked with creating two album covers. Drawing inspiration from a list of elements found in the group's lyrics, we aimed to reflect a duality between the robotic aspect of 20syl's music and the organic essence of J.Medeiros' voice.&nbsp;</p><p>The album, aptly titled \"Curio,\" required each element to evoke curiosity, strangeness, and the bizarre. Our designs seamlessly blend mechanical and natural themes, offering a visually stimulating representation of the album's concept that invites listeners to delve deeper into the unique soundscape created by Alltta.</p>",
+                      thumbnailDescription:
+                        "For Alltta's \"Curio\" album, Doze Studio designed two covers highlighting the contrast between 20syl's robotic music and J.Medeiros's organic voice. The designs evoke curiosity and oddity, blending mechanical and natural elements.",
+                      slug: "allttacurioartwork",
+                      underOpacity: 0.8,
+                      createdAt: "2024-07-02T12:42:39.163Z",
+                      updatedAt: "2024-07-02T14:21:38.634Z",
+                      publishedAt: "2024-07-02T13:11:22.357Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Alltta Curio",
+                    },
+                  ],
+                },
+              },
+            },
+            thumbnailVisual: {
+              data: {
+                id: 245,
+                attributes: {
+                  name: "D.png",
+                  alternativeText: null,
+                  caption: null,
+                  width: 2000,
+                  height: 2000,
+                  formats: {
+                    thumbnail: {
+                      name: "thumbnail_D.png",
+                      hash: "thumbnail_D_6daf767fdc",
+                      ext: ".png",
+                      mime: "image/png",
+                      path: null,
+                      width: 156,
+                      height: 156,
+                      size: 20.72,
+                      sizeInBytes: 20716,
+                      url: "/uploads/thumbnail_D_6daf767fdc.png",
+                    },
+                    xsmall: {
+                      name: "xsmall_D.png",
+                      hash: "xsmall_D_6daf767fdc",
+                      ext: ".png",
+                      mime: "image/png",
+                      path: null,
+                      width: 64,
+                      height: 64,
+                      size: 4.13,
+                      sizeInBytes: 4131,
+                      url: "/uploads/xsmall_D_6daf767fdc.png",
+                    },
+                    small: {
+                      name: "small_D.png",
+                      hash: "small_D_6daf767fdc",
+                      ext: ".png",
+                      mime: "image/png",
+                      path: null,
+                      width: 500,
+                      height: 500,
+                      size: 182.98,
+                      sizeInBytes: 182976,
+                      url: "/uploads/small_D_6daf767fdc.png",
+                    },
+                    medium: {
+                      name: "medium_D.png",
+                      hash: "medium_D_6daf767fdc",
+                      ext: ".png",
+                      mime: "image/png",
+                      path: null,
+                      width: 750,
+                      height: 750,
+                      size: 389.05,
+                      sizeInBytes: 389045,
+                      url: "/uploads/medium_D_6daf767fdc.png",
+                    },
+                    large: {
+                      name: "large_D.png",
+                      hash: "large_D_6daf767fdc",
+                      ext: ".png",
+                      mime: "image/png",
+                      path: null,
+                      width: 1000,
+                      height: 1000,
+                      size: 662.83,
+                      sizeInBytes: 662831,
+                      url: "/uploads/large_D_6daf767fdc.png",
+                    },
+                    xlarge: {
+                      name: "xlarge_D.png",
+                      hash: "xlarge_D_6daf767fdc",
+                      ext: ".png",
+                      mime: "image/png",
+                      path: null,
+                      width: 1920,
+                      height: 1920,
+                      size: 2158.36,
+                      sizeInBytes: 2158357,
+                      url: "/uploads/xlarge_D_6daf767fdc.png",
+                    },
+                  },
+                  hash: "D_6daf767fdc",
+                  ext: ".png",
+                  mime: "image/png",
+                  size: 557.48,
+                  url: "/uploads/D_6daf767fdc.png",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-07-02T12:44:50.041Z",
+                  updatedAt: "2024-07-02T12:56:53.224Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 15,
+                      title: "Alltta Curio ",
+                      client: "Alltta",
+                      intro: null,
+                      content:
+                        "<p>For Alltta's latest album, \"Curio,\" Doze Studio was tasked with creating two album covers. Drawing inspiration from a list of elements found in the group's lyrics, we aimed to reflect a duality between the robotic aspect of 20syl's music and the organic essence of J.Medeiros' voice.&nbsp;</p><p>The album, aptly titled \"Curio,\" required each element to evoke curiosity, strangeness, and the bizarre. Our designs seamlessly blend mechanical and natural themes, offering a visually stimulating representation of the album's concept that invites listeners to delve deeper into the unique soundscape created by Alltta.</p>",
+                      thumbnailDescription:
+                        "For Alltta's \"Curio\" album, Doze Studio designed two covers highlighting the contrast between 20syl's robotic music and J.Medeiros's organic voice. The designs evoke curiosity and oddity, blending mechanical and natural elements.",
+                      slug: "allttacurioartwork",
+                      underOpacity: 0.8,
+                      createdAt: "2024-07-02T12:42:39.163Z",
+                      updatedAt: "2024-07-02T14:21:38.634Z",
+                      publishedAt: "2024-07-02T13:11:22.357Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Alltta Curio",
+                    },
+                  ],
+                },
+              },
+            },
+            category: {
+              data: {
+                id: 12,
+                attributes: {
+                  name: "Illustration",
+                  createdAt: "2024-05-07T13:44:33.889Z",
+                  updatedAt: "2024-05-07T13:44:33.889Z",
+                },
+              },
+            },
+            infosList: [
+              {
+                id: 28,
+                creditItem: [
+                  {
+                    id: 107,
+                    name: "Alltta",
+                    link: "https://www.instagram.com/allttamusic/?hl=fr",
+                    title: "Client",
+                  },
+                ],
+              },
+              {
+                id: 27,
+                creditItem: [
+                  {
+                    id: 106,
+                    name: "Benjamin Tessier",
+                    link: null,
+                    title: "Artwork",
+                  },
+                  {
+                    id: 108,
+                    name: "Bounty Banana",
+                    link: "https://www.instagram.com/bountybanana/?hl=fr",
+                    title: "Music Video",
+                  },
+                  {
+                    id: 109,
+                    name: "On And On",
+                    link: "https://www.onandon-records.com/",
+                    title: "Label",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        {
+          id: 4,
+          attributes: {
+            title: "Mobil M - Thor & Sparkle",
+            client: "Mobil M",
+            intro: null,
+            content:
+              "<p>Doze Studio was commissioned to create a 3D motion design video highlighting the modularity of the Mobil M furniture line \"Thor &amp; Sparkle.\" The video seamlessly integrates multidimensional and multi-material elements to demonstrate the furniture's ability to transform and adapt to different sales environments.<br><br>Using a palette of bright colors and clean, satisfying animations, the video encourages viewers to unleash their creativity to design unique and personalized commercial spaces. This visual presentation effectively communicates the broad and adaptable range of Thor &amp; Sparkle furniture, emphasizing their commitment to meeting each customer's needs.</p>",
+            thumbnailDescription:
+              '3D motion design video for the Mobil M "Thor & Sparkle" furniture line, showcasing its versatile and transformative capabilities through vivid colors and smooth animations to inspire creative commercial space designs.',
+            slug: "mobilm-thorandsparkle",
+            underOpacity: 0.8,
+            createdAt: "2024-05-13T12:18:50.921Z",
+            updatedAt: "2024-05-16T10:23:05.226Z",
+            publishedAt: "2024-05-13T12:29:37.369Z",
+            underVisualVimeo: null,
+            displayProjectTitle: "Mobil M",
+            underVisual: {
+              data: {
+                id: 41,
+                attributes: {
+                  name: "20210501 Mastre Mobile-M 01.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "20210501_Mastre_Mobile_M_01_95897c3ad5",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 1038.01,
+                  url: "/uploads/20210501_Mastre_Mobile_M_01_95897c3ad5.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-13T12:52:51.960Z",
+                  updatedAt: "2024-05-16T10:11:28.008Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 4,
+                      title: "Mobil M - Thor & Sparkle",
+                      client: "Mobil M",
+                      intro: null,
+                      content:
+                        "<p>Doze Studio was commissioned to create a 3D motion design video highlighting the modularity of the Mobil M furniture line \"Thor &amp; Sparkle.\" The video seamlessly integrates multidimensional and multi-material elements to demonstrate the furniture's ability to transform and adapt to different sales environments.<br><br>Using a palette of bright colors and clean, satisfying animations, the video encourages viewers to unleash their creativity to design unique and personalized commercial spaces. This visual presentation effectively communicates the broad and adaptable range of Thor &amp; Sparkle furniture, emphasizing their commitment to meeting each customer's needs.</p>",
+                      thumbnailDescription:
+                        '3D motion design video for the Mobil M "Thor & Sparkle" furniture line, showcasing its versatile and transformative capabilities through vivid colors and smooth animations to inspire creative commercial space designs.',
+                      slug: "mobilm-thorandsparkle",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T12:18:50.921Z",
+                      updatedAt: "2024-05-16T10:23:05.226Z",
+                      publishedAt: "2024-05-13T12:29:37.369Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Mobil M",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 4,
+                      title: "Mobil M - Thor & Sparkle",
+                      client: "Mobil M",
+                      intro: null,
+                      content:
+                        "<p>Doze Studio was commissioned to create a 3D motion design video highlighting the modularity of the Mobil M furniture line \"Thor &amp; Sparkle.\" The video seamlessly integrates multidimensional and multi-material elements to demonstrate the furniture's ability to transform and adapt to different sales environments.<br><br>Using a palette of bright colors and clean, satisfying animations, the video encourages viewers to unleash their creativity to design unique and personalized commercial spaces. This visual presentation effectively communicates the broad and adaptable range of Thor &amp; Sparkle furniture, emphasizing their commitment to meeting each customer's needs.</p>",
+                      thumbnailDescription:
+                        '3D motion design video for the Mobil M "Thor & Sparkle" furniture line, showcasing its versatile and transformative capabilities through vivid colors and smooth animations to inspire creative commercial space designs.',
+                      slug: "mobilm-thorandsparkle",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T12:18:50.921Z",
+                      updatedAt: "2024-05-16T10:23:05.226Z",
+                      publishedAt: "2024-05-13T12:29:37.369Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Mobil M",
+                    },
+                  ],
+                },
+              },
+            },
+            thumbnailVisual: {
+              data: {
+                id: 41,
+                attributes: {
+                  name: "20210501 Mastre Mobile-M 01.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "20210501_Mastre_Mobile_M_01_95897c3ad5",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 1038.01,
+                  url: "/uploads/20210501_Mastre_Mobile_M_01_95897c3ad5.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-13T12:52:51.960Z",
+                  updatedAt: "2024-05-16T10:11:28.008Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 4,
+                      title: "Mobil M - Thor & Sparkle",
+                      client: "Mobil M",
+                      intro: null,
+                      content:
+                        "<p>Doze Studio was commissioned to create a 3D motion design video highlighting the modularity of the Mobil M furniture line \"Thor &amp; Sparkle.\" The video seamlessly integrates multidimensional and multi-material elements to demonstrate the furniture's ability to transform and adapt to different sales environments.<br><br>Using a palette of bright colors and clean, satisfying animations, the video encourages viewers to unleash their creativity to design unique and personalized commercial spaces. This visual presentation effectively communicates the broad and adaptable range of Thor &amp; Sparkle furniture, emphasizing their commitment to meeting each customer's needs.</p>",
+                      thumbnailDescription:
+                        '3D motion design video for the Mobil M "Thor & Sparkle" furniture line, showcasing its versatile and transformative capabilities through vivid colors and smooth animations to inspire creative commercial space designs.',
+                      slug: "mobilm-thorandsparkle",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T12:18:50.921Z",
+                      updatedAt: "2024-05-16T10:23:05.226Z",
+                      publishedAt: "2024-05-13T12:29:37.369Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Mobil M",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 4,
+                      title: "Mobil M - Thor & Sparkle",
+                      client: "Mobil M",
+                      intro: null,
+                      content:
+                        "<p>Doze Studio was commissioned to create a 3D motion design video highlighting the modularity of the Mobil M furniture line \"Thor &amp; Sparkle.\" The video seamlessly integrates multidimensional and multi-material elements to demonstrate the furniture's ability to transform and adapt to different sales environments.<br><br>Using a palette of bright colors and clean, satisfying animations, the video encourages viewers to unleash their creativity to design unique and personalized commercial spaces. This visual presentation effectively communicates the broad and adaptable range of Thor &amp; Sparkle furniture, emphasizing their commitment to meeting each customer's needs.</p>",
+                      thumbnailDescription:
+                        '3D motion design video for the Mobil M "Thor & Sparkle" furniture line, showcasing its versatile and transformative capabilities through vivid colors and smooth animations to inspire creative commercial space designs.',
+                      slug: "mobilm-thorandsparkle",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T12:18:50.921Z",
+                      updatedAt: "2024-05-16T10:23:05.226Z",
+                      publishedAt: "2024-05-13T12:29:37.369Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Mobil M",
+                    },
+                  ],
+                },
+              },
+            },
+            category: {
+              data: {
+                id: 17,
+                attributes: {
+                  name: "Advertising",
+                  createdAt: "2024-05-14T14:57:04.669Z",
+                  updatedAt: "2024-05-14T14:57:04.669Z",
+                },
+              },
+            },
+            infosList: [
+              {
+                id: 13,
+                creditItem: [
+                  {
+                    id: 64,
+                    name: "Mobil M",
+                    link: "https://www.mobil-m.com/fr",
+                    title: "Client",
+                  },
+                ],
+              },
+              {
+                id: 14,
+                creditItem: [
+                  {
+                    id: 65,
+                    name: "Doze Studio",
+                    link: "https://doze.studio/",
+                    title: "Creative Direction",
+                  },
+                  {
+                    id: 66,
+                    name: "Benjamin Tessier",
+                    link: null,
+                    title: "Story Board",
+                  },
+                  {
+                    id: 67,
+                    name: "Anthony Loquet",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 68,
+                    name: "Johan Petit",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 69,
+                    name: "Benjamin Tessier",
+                    link: null,
+                    title: "Motion Design",
+                  },
+                  {
+                    id: 70,
+                    name: "Anthony Loquet",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 71,
+                    name: "Johan Petit",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 72,
+                    name: "Thomas Cousin",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 73,
+                    name: "Johan Petit",
+                    link: null,
+                    title: "Sound Design",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        {
+          id: 5,
+          attributes: {
+            title: "Nothing Ear",
+            client: "Nothing Tech",
+            intro: null,
+            content:
+              "<p>Doze Studio recently worked on an unselected proposal for promoting the Nothing Ear (1) headphones by Nothing Tech.<br><br>The project highlighted the unique nature of these headphones, featuring their transparent design that showcases internal components like microphones and circuits. The envisioned campaign utilized the headphones' black and white colors to symbolize minimalist style and dark elegance, respectively. The focus was on the ease of use due to the headphones' touch-sensitive surface, their lightness, and comfort.</p>",
+            thumbnailDescription:
+              "Proposal for the Nothing Ear (1) headphones, emphasizing their transparent, minimalist design and user-friendly features.",
+            slug: "nothing-ear",
+            underOpacity: 0.8,
+            createdAt: "2024-05-13T14:27:56.658Z",
+            updatedAt: "2024-05-16T10:01:21.406Z",
+            publishedAt: "2024-05-13T14:28:49.607Z",
+            underVisualVimeo: null,
+            displayProjectTitle: "Nothing Ear",
+            underVisual: {
+              data: {
+                id: 57,
+                attributes: {
+                  name: "Nothing_son discal_mp4_clean.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "Nothing_son_discal_mp4_clean_dcd9a04d5c",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 1200.19,
+                  url: "/uploads/Nothing_son_discal_mp4_clean_dcd9a04d5c.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-13T14:46:49.634Z",
+                  updatedAt: "2024-05-16T10:01:20.364Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 5,
+                      title: "Nothing Ear",
+                      client: "Nothing Tech",
+                      intro: null,
+                      content:
+                        "<p>Doze Studio recently worked on an unselected proposal for promoting the Nothing Ear (1) headphones by Nothing Tech.<br><br>The project highlighted the unique nature of these headphones, featuring their transparent design that showcases internal components like microphones and circuits. The envisioned campaign utilized the headphones' black and white colors to symbolize minimalist style and dark elegance, respectively. The focus was on the ease of use due to the headphones' touch-sensitive surface, their lightness, and comfort.</p>",
+                      thumbnailDescription:
+                        "Proposal for the Nothing Ear (1) headphones, emphasizing their transparent, minimalist design and user-friendly features.",
+                      slug: "nothing-ear",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T14:27:56.658Z",
+                      updatedAt: "2024-05-16T10:01:21.406Z",
+                      publishedAt: "2024-05-13T14:28:49.607Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Nothing Ear",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 5,
+                      title: "Nothing Ear",
+                      client: "Nothing Tech",
+                      intro: null,
+                      content:
+                        "<p>Doze Studio recently worked on an unselected proposal for promoting the Nothing Ear (1) headphones by Nothing Tech.<br><br>The project highlighted the unique nature of these headphones, featuring their transparent design that showcases internal components like microphones and circuits. The envisioned campaign utilized the headphones' black and white colors to symbolize minimalist style and dark elegance, respectively. The focus was on the ease of use due to the headphones' touch-sensitive surface, their lightness, and comfort.</p>",
+                      thumbnailDescription:
+                        "Proposal for the Nothing Ear (1) headphones, emphasizing their transparent, minimalist design and user-friendly features.",
+                      slug: "nothing-ear",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T14:27:56.658Z",
+                      updatedAt: "2024-05-16T10:01:21.406Z",
+                      publishedAt: "2024-05-13T14:28:49.607Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Nothing Ear",
+                    },
+                  ],
+                },
+              },
+            },
+            thumbnailVisual: {
+              data: {
+                id: 57,
+                attributes: {
+                  name: "Nothing_son discal_mp4_clean.mp4",
+                  alternativeText: null,
+                  caption: null,
+                  width: null,
+                  height: null,
+                  formats: {},
+                  hash: "Nothing_son_discal_mp4_clean_dcd9a04d5c",
+                  ext: ".mp4",
+                  mime: "video/mp4",
+                  size: 1200.19,
+                  url: "/uploads/Nothing_son_discal_mp4_clean_dcd9a04d5c.mp4",
+                  previewUrl: null,
+                  provider: "local",
+                  provider_metadata: null,
+                  createdAt: "2024-05-13T14:46:49.634Z",
+                  updatedAt: "2024-05-16T10:01:20.364Z",
+                  related: [
+                    {
+                      __type: "api::project.project",
+                      id: 5,
+                      title: "Nothing Ear",
+                      client: "Nothing Tech",
+                      intro: null,
+                      content:
+                        "<p>Doze Studio recently worked on an unselected proposal for promoting the Nothing Ear (1) headphones by Nothing Tech.<br><br>The project highlighted the unique nature of these headphones, featuring their transparent design that showcases internal components like microphones and circuits. The envisioned campaign utilized the headphones' black and white colors to symbolize minimalist style and dark elegance, respectively. The focus was on the ease of use due to the headphones' touch-sensitive surface, their lightness, and comfort.</p>",
+                      thumbnailDescription:
+                        "Proposal for the Nothing Ear (1) headphones, emphasizing their transparent, minimalist design and user-friendly features.",
+                      slug: "nothing-ear",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T14:27:56.658Z",
+                      updatedAt: "2024-05-16T10:01:21.406Z",
+                      publishedAt: "2024-05-13T14:28:49.607Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Nothing Ear",
+                    },
+                    {
+                      __type: "api::project.project",
+                      id: 5,
+                      title: "Nothing Ear",
+                      client: "Nothing Tech",
+                      intro: null,
+                      content:
+                        "<p>Doze Studio recently worked on an unselected proposal for promoting the Nothing Ear (1) headphones by Nothing Tech.<br><br>The project highlighted the unique nature of these headphones, featuring their transparent design that showcases internal components like microphones and circuits. The envisioned campaign utilized the headphones' black and white colors to symbolize minimalist style and dark elegance, respectively. The focus was on the ease of use due to the headphones' touch-sensitive surface, their lightness, and comfort.</p>",
+                      thumbnailDescription:
+                        "Proposal for the Nothing Ear (1) headphones, emphasizing their transparent, minimalist design and user-friendly features.",
+                      slug: "nothing-ear",
+                      underOpacity: 0.8,
+                      createdAt: "2024-05-13T14:27:56.658Z",
+                      updatedAt: "2024-05-16T10:01:21.406Z",
+                      publishedAt: "2024-05-13T14:28:49.607Z",
+                      underVisualVimeo: null,
+                      displayProjectTitle: "Nothing Ear",
+                    },
+                  ],
+                },
+              },
+            },
+            category: {
+              data: {
+                id: 17,
+                attributes: {
+                  name: "Advertising",
+                  createdAt: "2024-05-14T14:57:04.669Z",
+                  updatedAt: "2024-05-14T14:57:04.669Z",
+                },
+              },
+            },
+            infosList: [
+              {
+                id: 17,
+                creditItem: [
+                  {
+                    id: 79,
+                    name: "Benjamin Tessier",
+                    link: null,
+                    title: "Motion Design",
+                  },
+                  {
+                    id: 80,
+                    name: "Martin Girardeau",
+                    link: null,
+                    title: null,
+                  },
+                  {
+                    id: 81,
+                    name: "Discal Studio",
+                    link: "https://discalstudio.com/",
+                    title: "Sound",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ];
+    </script>
+  </body>
+</html>

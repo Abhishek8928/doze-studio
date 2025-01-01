@@ -1,0 +1,32 @@
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+@font-face {
+    font-family: "UncutSans-Reg";
+    src: url(./font/UncutSans-Regular.woff2);
+}
+
+@font-face {
+    font-family: "UncutSans-Light";
+    src: url(./font/UncutSans-Light.woff2);
+}
+
+@font-face {
+    font-family: "UncutSans-Medium";
+    src: url(./font/UncutSans-Medium.woff2);
+}
+
+.font-Sans-Reg{
+    font-family: "UncutSans-Reg";
+}
+
+.font-Sans-Med{
+    font-family: "UncutSans-Medium";
+}
+
+.font-Sans-Lig{
+    font-family: "UncutSans-Light";
+}
